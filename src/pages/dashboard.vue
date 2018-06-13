@@ -14,7 +14,10 @@
       </v-layout>
     </v-flex>
   </v-layout>
-  <v-btn :to="{'name': 'contribute'}"> Contribute </v-btn>
+  <v-layout align-content-space-between>
+    <v-btn :to="{'name': 'contribute'}"> Contribute </v-btn>
+    <v-btn @click="logout"> Logout </v-btn>
+  </v-layout>
 </div>
 </template>
 
@@ -29,6 +32,11 @@ export default {
   },
   computed: {
     ...mapGetters(["user"])
+  },
+  methods: {
+    logout(){
+      this.$store.dispatch('clearAuthData');
+    }
   },
   asyncComputed: {
     everBalance: {
