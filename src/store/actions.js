@@ -3,12 +3,7 @@ import router from '../router';
 
 export default {
   async signup(state, user) {
-    try{
-      var response = await axios.post('api/auth/register', user)
-    }
-    catch(error){
-      console.log(error);
-    }
+    const response = await axios.post('api/auth/register', user)
     localStorage.setItem('token', response.data.accessToken);
     state.commit('storeToken', response.data.accessToken);
     state.commit('storeUser', {
@@ -21,15 +16,13 @@ export default {
     router.push({ path: '/dashboard' });
   },
 
-  login(state, user) {
-    axios.post('api/auth/login', user).then(response => {
-      localStorage.setItem('token', response.data.accessToken);
-      state.commit('storeToken', response.data.accessToken);
-      state.commit('storeUser', response.data.user);
-      router.push({ path: '/dashboard' });
-    }).catch((error) => {
-      console.log(error);
-    })
+  async login(state, user) {
+    const response = await axios.post('api/auth/login', user);
+    localStorage.setItem('token', response.data.accessToken);
+    state.commit('storeToken', response.data.accessToken);
+    state.commit('storeUser', response.data.user);
+    router.push({ path: '/dashboard' });
+    // return response;
   },
 
   updateProfile(state) {
@@ -41,11 +34,11 @@ export default {
   clearAuthData(state) {
     localStorage.removeItem('token');
     state.commit('clearToken');
-    router.push({ path: '/' });
+    router.push({ name: "login" });
   },
 
-  storeCaAddress(state, ca) {
-    axios.post('api/account/updateca', { ca: ca }).then(({ data }) => {
+  storeContributionData(state, { ca, xlmAmount }) {
+    axios.post('api/account/payment', { ca: ca, xlmAmount: xlmAmount }).then(({ data }) => {
       state.commit('caAddress', ca);
     }).catch(function (error) {
       console.log(error);

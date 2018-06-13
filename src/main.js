@@ -25,9 +25,6 @@ const vue = new Vue({
     if(token){
       this.$store.commit('storeToken', token);
     }
-    else{
-      router.push('/login');
-    }
 	}
 })
 

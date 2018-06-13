@@ -47,7 +47,7 @@
       label="Do you agree?"
       required
     ></v-checkbox>
-
+    <p v-if="error" class="red--text">{{error}}</p>
     <v-btn
       :disabled="!valid"
       @click="submit"
@@ -62,6 +62,7 @@
 
   export default {
     data: () => ({
+      error:'',
       valid: true,
       name: '',
       nameRules: [
@@ -91,6 +92,8 @@
             name: this.name,
             email: this.email,
             password: this.password
+          }).catch((error)=>{
+            this.error = error.message;
           })
         }
       },
