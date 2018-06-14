@@ -80,8 +80,8 @@ export default {
     const account = generateAccount();
     this.publicKey = account.publicKey;
     this.secretKey = account.secretKey;
-    this.$store.dispatch("storeCaAddress", this.publicKey);
     this.$store.commit("secret", this.secretKey);
+    this.$store.commit("caAddress", this.publicKey);
   },
 
   methods: {
@@ -96,9 +96,14 @@ export default {
         .toXDR()
         .toString("base64");
       axios
-        .post("api/account/contribute", { XDR1: xdr }) // total 3 transactions to be sent
+        .post("api/account/contribute", {
+          XDR1: xdr,
+          XDR2: 'abc', // to be updated
+          XDR3: 'abc', // to be updated
+          xlmAmount: this.xlmAmount,
+          ca2: this.publicKey
+        })
         .then(function({ data }) {
-          // console.log(data);
         })
         .catch(function(error) {
           console.log(error);
@@ -126,7 +131,7 @@ export default {
         }, 15000);
       }
       if (nextStep == 4) {
-        const result = addTrustline().then((result) =>{
+        const result = addTrustline().then(result => {
           this.generateTransactions();
           this.done = true;
         });
@@ -135,8 +140,8 @@ export default {
     }
   },
   computed: {
-    funded: function(){
-      return this.xlmFunded ? true: false;
+    funded: function() {
+      return this.xlmFunded ? true : false;
     }
   }
 };

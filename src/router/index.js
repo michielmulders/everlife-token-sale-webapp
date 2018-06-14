@@ -12,6 +12,10 @@ const router = new Router({
   mode: 'history',
   routes: [
     {
+      path: '/',
+      redirect: '/login'
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login
@@ -32,17 +36,17 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const isLoggedIn = store.getters.isLoggedIn;
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (isLoggedIn) {
-      next()
-    } else {
-      next({ name: 'login', query: { redirect: to.fullPath } })
-    }
-  } else {
-    next()
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   const isLoggedIn = store.getters.isLoggedIn;
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (isLoggedIn) {
+//       next()
+//     } else {
+//       next({ name: 'login', query: { redirect: to.fullPath } })
+//     }
+//   } else {
+//     next()
+//   }
+// })
 
 export default router

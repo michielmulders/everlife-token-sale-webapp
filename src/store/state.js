@@ -5,7 +5,12 @@ export default {
         email: '',
         kyc: false,
         whitelist: false,
-        ca: null
+        contribution: {
+            XDR2: '',
+            XDR3: '',
+            ca2: '',
+            xlmAmount: ''
+        }
     },
     contribution: {
         xlmAmount: 0,

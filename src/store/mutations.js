@@ -8,7 +8,7 @@ export default {
     state.user.email = user.email;
     state.user.kyc = user.kyc;
     state.user.whitelist = user.whitelist;
-    state.user.ca = user.ca;
+    state.user.contribution = user.contribution;
   },
 
   clearToken(state) {

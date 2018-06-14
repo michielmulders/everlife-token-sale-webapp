@@ -7,6 +7,7 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import store from './store'
+import './filters/dateFilters' 
 
 Vue.use(Vuetify)
 Vue.use(AsyncComputed);
