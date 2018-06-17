@@ -47,6 +47,7 @@
         <v-card color="lighten-1" class="mb-5" height="200px">
             <p v-show="!done">Purchasing ever tokens.</p>
             <p v-show="done"> Ever token purchased </p>
+            <p  class="red--text" v-if="errorOnContribute">{{errorOnContribute}}</p>
         </v-card>
         <v-btn color="primary" :to="{name: 'dashboard'}" :disabled="!done">Done</v-btn>
       </v-stepper-content>
@@ -62,7 +63,8 @@ import {
   generateAccount,
   getAccountBalance,
   addTrustline,
-  generateIcoTransactions
+  generateIcoTransactions,
+  addDASignerAndUpdateWeight
 } from "../stellar/transaction";
 
 export default {
@@ -73,7 +75,8 @@ export default {
       xlmAmount: 0,
       publicKey: "",
       secretKey: "",
-      xlmFunded: 0
+      xlmFunded: 0,
+      errorOnContribute: ""
     };
   },
   mounted() {
@@ -85,29 +88,31 @@ export default {
   },
 
   methods: {
-    async generateTransactions() {
-      try {
-        var transaction = await generateIcoTransactions(this.xlmAmount);
-      } catch (error) {
-        console.log(error);
-      }
-      const xdr = transaction
+    async contribute() {
+      const {
+        transaction1,
+        transaction2,
+        transaction3
+      } = await generateIcoTransactions(this.xlmAmount);
+      const xdr1 = transaction1
         .toEnvelope()
         .toXDR()
         .toString("base64");
-      axios
-        .post("api/account/contribute", {
-          XDR1: xdr,
-          XDR2: 'abc', // to be updated
-          XDR3: 'abc', // to be updated
-          xlmAmount: this.xlmAmount,
-          ca2: this.publicKey
-        })
-        .then(function({ data }) {
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      const xdr2 = transaction2
+        .toEnvelope()
+        .toXDR()
+        .toString("base64");
+      const xdr3 = transaction3
+        .toEnvelope()
+        .toXDR()
+        .toString("base64");
+      const data = await axios.post("api/account/contribute", {
+        XDR1: xdr1,
+        XDR2: xdr2,
+        XDR3: xdr3,
+        xlmAmount: this.xlmAmount,
+        ca2: this.publicKey
+      });
       return true;
     },
 
@@ -132,8 +137,16 @@ export default {
       }
       if (nextStep == 4) {
         const result = addTrustline().then(result => {
-          this.generateTransactions();
-          this.done = true;
+          addDASignerAndUpdateWeight().then(result => {
+            this.contribute()
+              .then(data => {
+                this.done = true;
+              })
+              .catch(error => {
+                this.errorOnContribute =
+                  "Something went wrong, please try again.";
+              });
+          });
         });
       }
       this.step = nextStep;
