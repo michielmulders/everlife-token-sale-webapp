@@ -1,4 +1,4 @@
-# everlife.ai-token-sale-webapp
+# everlifeai-token-sale-webapp
 
 > everlife token sale web app
 
