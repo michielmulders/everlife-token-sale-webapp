@@ -11,7 +11,6 @@ export default {
       email: user.email,
       kyc: false,
       whitelist: false,
-      ca: null
     })
     router.push({ path: '/dashboard' });
   },
@@ -35,13 +34,5 @@ export default {
     localStorage.removeItem('token');
     state.commit('clearToken');
     router.push({ name: "login" });
-  },
-
-  storeContributionData(state, { ca, xlmAmount }) {
-    axios.post('api/account/payment', { ca: ca, xlmAmount: xlmAmount }).then(({ data }) => {
-      state.commit('caAddress', ca);
-    }).catch(function (error) {
-      console.log(error);
-    })
   }
 }

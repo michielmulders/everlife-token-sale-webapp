@@ -8,19 +8,9 @@ export default {
     state.user.email = user.email;
     state.user.kyc = user.kyc;
     state.user.whitelist = user.whitelist;
-    state.user.contribution = user.contribution;
   },
 
   clearToken(state) {
     state.token = null;
   },
-
-  caAddress(state, ca) {
-    state.contribution.public = ca;
-    state.user.ca = ca;
-  },
-
-  secret(state, secret){
-    state.contribution.secret = secret;
-  }
 }

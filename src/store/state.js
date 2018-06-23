@@ -4,18 +4,12 @@ export default {
         name: '',
         email: '',
         kyc: false,
-        whitelist: false,
-        contribution: {
-            XDR2: '',
-            XDR3: '',
-            ca2: '',
-            xlmAmount: ''
-        }
+        whitelist: false
     },
-    contribution: {
-        xlmAmount: 0,
-        secret: '',
-        public: ''
+    ico: {
+        startDate: null,
+        endDate: null,
+        status: ''
     },
     everToken: {
         DA: 'GCWPG42F3UNVYU37XQTNKH57D2RGEIZ6O3D6AI5UCGXQ2RT2XHOW6HNM',

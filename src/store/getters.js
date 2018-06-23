@@ -11,10 +11,6 @@ export default {
         return state.user;
     },
 
-    contribution(state){
-        return state.contribution;
-    },
-
     everToken(state){
         return state.everToken;
     },
