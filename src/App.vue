@@ -1,23 +1,23 @@
 <template>
   <v-app>
+    <app-header></app-header>
     <v-container>
       <v-content>
         <router-view/>
       </v-content>
     </v-container>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
-    </v-footer>
+    <app-footer></app-footer>
   </v-app>
 </template>
 
 <script>
+import Header from './components/Header.vue';
+import Footer from './components/Footer.vue';
 export default {
   data () {
     return {
       clipped: false,
       drawer: true,
-      fixed: false,
       items: [{
         icon: 'bubble_chart',
         title: 'Inspire'
@@ -27,6 +27,10 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js'
     }
+  },
+  components: {
+    appHeader: Header,
+    appFooter: Footer
   },
   name: 'App'
 }
