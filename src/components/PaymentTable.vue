@@ -16,8 +16,9 @@
 </template>
 
 <script>
+import { getAccountBalance, submitXdr } from "../stellar/transaction";
 export default {
-  props: ["contribution", "everBalance"],
+  props: ["contributions"],
   data() {
     return {
       headers: [
@@ -33,18 +34,40 @@ export default {
       ]
     };
   },
-  computed: {
-    payments: function() {
-      return [
-        {
-          value: false,
-          time: this.contribution.createdAt,
-          xlmAmount: this.contribution.xlmAmount,
-          everBalance: this.everBalance,
-          bonus: 0,
-          total: this.everBalance // will be + bonus later
+  asyncComputed: {
+    payments: {
+      async get(){
+        const paymentsArray = await Promise.all(this.contributions.map(async (payment, index, array) => {
+          const entry = {
+            value: false,
+            time: payment.createdAt,
+            xlmAmount: payment.xlmAmount,
+            everBalance: await this.everBalance(payment.ca2),
+            bonus: 0,
+            total: this.everBalance // will be + bonus later
+          };
+          entry.total = entry.everBalance;
+          return entry;
+        }));
+        return paymentsArray;
+      },
+      default(){
+        return []
+      }
+    }
+  },
+  methods: {
+    async everBalance(ca2){
+      if (!ca2) {
+        return 0;
+      }
+      const result = await getAccountBalance(ca2);
+      const everBalance = result.balances.find(balance => {
+        if (balance.asset_code == "EVER") {
+          return true;
         }
-      ];
+      });
+      return everBalance.balance;
     }
   }
 };
