@@ -4,7 +4,8 @@ export default {
         name: '',
         email: '',
         kyc: false,
-        whitelist: false
+        whitelist: false,
+        contributions: []
     },
     ico: {
         startDate: null,
