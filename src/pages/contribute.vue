@@ -83,8 +83,6 @@ export default {
     const account = generateAccount();
     this.publicKey = account.publicKey;
     this.secretKey = account.secretKey;
-    this.$store.commit("secret", this.secretKey);
-    this.$store.commit("caAddress", this.publicKey);
   },
 
   methods: {
@@ -93,7 +91,7 @@ export default {
         transaction1,
         transaction2,
         transaction3
-      } = await generateIcoTransactions(this.xlmAmount);
+      } = await generateIcoTransactions(this.xlmAmount, this.publicKey, this.secretKey);
       const xdr1 = transaction1
         .toEnvelope()
         .toXDR()
@@ -136,8 +134,8 @@ export default {
         }, 15000);
       }
       if (nextStep == 4) {
-        const result = addTrustline().then(result => {
-          addDASignerAndUpdateWeight().then(result => {
+        const result = addTrustline(this.publicKey, this.secretKey).then(result => {
+          addDASignerAndUpdateWeight(this.publicKey, this.secretKey).then(result => {
             this.contribute()
               .then(data => {
                 this.done = true;
