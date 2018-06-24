@@ -20,13 +20,13 @@
       required
     ></v-text-field>
     <p v-if="error" class="red--text">{{error}}</p>
-    <v-btn
-      :disabled="!valid"
-      @click="submit"
-    >
-      submit
-    </v-btn>
-
+    <v-layout justify-center>
+      <v-btn
+        :disabled="!valid"
+        @click="submit" color="success">
+        Login
+      </v-btn>
+    </v-layout>
   </v-form>
 </template>
 

@@ -44,16 +44,18 @@
     <v-checkbox
       v-model="checkbox"
       :rules="[v => !!v || 'You must agree to continue!']"
-      label="Do you agree?"
+      label="Acecept Terms"
       required
     ></v-checkbox>
     <p v-if="error" class="red--text">{{error}}</p>
-    <v-btn
-      :disabled="!valid"
-      @click="submit"
-    >
-      submit
-    </v-btn>
+    <v-layout justify-center>
+      <v-btn
+        :disabled="!valid"
+        @click="submit"
+        color="success">
+        Signup
+      </v-btn>
+    </v-layout>
 
   </v-form>
 </template>
