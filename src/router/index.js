@@ -4,6 +4,7 @@ import Login from '@/pages/login'
 import Dashboard from '@/pages/dashboard'
 import Contribute from '@/pages/contribute'
 import NotFound from '@/components/NotFound'
+import Logout from '@/components/logout'
 
 import store from '../store';
 Vue.use(Router)
@@ -19,6 +20,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: Logout
     },
     {
       path: '/dashboard',
