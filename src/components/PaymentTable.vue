@@ -3,7 +3,7 @@
     :headers="headers"
     :items="payments"
     hide-actions
-    class="elevation-1 table"
+    class="elevation-1"
   >
     <template slot="items" slot-scope="props">
       <td class="text-xs-center">{{ props.item.time | formatDate}}</td>
@@ -11,6 +11,7 @@
       <td class="text-xs-center">{{ props.item.everBalance }}</td>
       <td class="text-xs-center">{{ props.item.bonus }}</td>
       <td class="text-xs-center">{{ props.item.total }}</td>
+      <td class="text-xs-center"><v-btn flat icon color="black"><i class="fa fa-cogs"></i></v-btn></td>
     </template>
   </v-data-table>
 </template>
@@ -30,7 +31,8 @@ export default {
         { text: "XLM Paid", align: "center" },
         { text: "EVER Purchased", align: "center" },
         { text: "Bonus", align: "center" },
-        { text: "Total EVER", align: "center" }
+        { text: "Total EVER", align: "center" },
+        { text: "Manage", align: "center" },
       ]
     };
   },
@@ -73,8 +75,3 @@ export default {
 };
 </script>
 
-<style>
-.table {
-  width: 70%;
-}
-</style>
