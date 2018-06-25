@@ -1,15 +1,6 @@
 <template>
+<div>
     <div class="header">
-        <div class="header-angle-bg">
-            <div class="overlay-bubble">
-                <div class="overlay-bubble-1"></div>
-                <div class="overlay-bubble-2"></div>
-                <div class="overlay-bubble-3"></div>
-                <div class="overlay-bubble-4"></div>
-                <div class="overlay-bubble-5"></div>
-                <div class="overlay-bubble-6"></div>
-            </div>
-        </div>
         <v-container class="my-3">
             <v-layout row align-content-space-between>
                 <v-flex>
@@ -31,26 +22,34 @@
                     </v-layout>
                 </v-flex>
             </v-layout>
-            <!-- Drawer -->
-            <v-layout wrap>
-                <v-navigation-drawer
-                    v-model="drawer"
-                    temporary dark
-                    absolute right
-                    class="drawer"
-                    >
-                    <v-list class="pt-0" dense>
-                        <v-divider></v-divider>
-                        <v-list-tile router :to="item.to" v-for="(item, i) in items" :key="i" exact>
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </v-list>
-                </v-navigation-drawer>
-            </v-layout>
         </v-container>
     </div>
+    <v-navigation-drawer
+        v-model="drawer"
+        temporary dark
+        absolute right
+        class="drawer"
+        >
+        <v-list class="pt-0" dense>
+            <v-divider></v-divider>
+            <v-list-tile router :to="item.to" v-for="(item, i) in items" :key="i" exact>
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+        </v-list>
+    </v-navigation-drawer>
+    <div class="header-angle-bg">
+        <div class="overlay-bubble">
+            <div class="overlay-bubble-1"></div>
+            <div class="overlay-bubble-2"></div>
+            <div class="overlay-bubble-3"></div>
+            <div class="overlay-bubble-4"></div>
+            <div class="overlay-bubble-5"></div>
+            <div class="overlay-bubble-6"></div>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -79,19 +78,28 @@ export default {
 <style scoped>
 .drawer {
     background-color: #111233 !important;
+    /* height: 100%; */
 }
 .header {
-    background-color: #3455ff;
+    /* background-color: #3455ff; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: transparent;
+    width: 100%;
 }
 
 .header-angle-bg{
     position:absolute;
     left:0;
     top:-200%;
-    height:222%;
+    height:217%;
     width:100%;
     content:'';
     overflow:hidden;
+    z-index: 1; 
+    background-color: #3455ff;
 }
 .overlay-bubble{
     position:absolute;

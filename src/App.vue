@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <app-header></app-header>
-    <v-container>
+    <v-container :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
       <v-content>
         <router-view/>
       </v-content>
@@ -35,3 +35,11 @@ export default {
   name: 'App'
 }
 </script>
+<style scoped>
+  .smallScreen {
+    padding-top: 90px;
+  }
+  .mediumScreen {
+    padding-top: 140px;
+  }
+</style>
