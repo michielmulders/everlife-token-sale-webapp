@@ -1,59 +1,117 @@
 <template>
+  <v-layout justify-center class="mt-5">
     <v-stepper v-model="step" class="modal">
-    <v-stepper-header>
-      <v-stepper-step :complete="step > 1" step="1">Info</v-stepper-step>
-      <v-divider></v-divider>
-      <v-stepper-step :complete="step > 2" step="2">Account</v-stepper-step>
-      <v-divider></v-divider>
-      <v-stepper-step :complete="step > 3" step="3">Payment</v-stepper-step>
-      <v-divider></v-divider>
-      <v-stepper-step step="4">Finish</v-stepper-step>
-    </v-stepper-header>
-    <v-stepper-items>
-      <v-stepper-content step="1">
-        <v-card color="lighten-1" class="mb-5" height="200px">
-            <v-card-title> Enter XLM you want to contribute </v-card-title>
-            <v-card-actions>
-                <v-text-field
-                    v-model="xlmAmount"
-                    label="XLM"
-                    type="number"
-                    required
-                ></v-text-field>
-            </v-card-actions>
-        </v-card>
-        <v-btn color="primary" @click="nextStep(2)">Continue</v-btn>
-      </v-stepper-content>
-      <v-stepper-content step="2">
-        <v-card color="lighten-1" class="mb-5" height="200px">
-            <h2> Account details </h2>
-            Copy these account details and keep safe, EVER tokens will be sent to this account.
-            <h3> public : {{publicKey}} </h3>
-            <h3> secret : {{secretKey}} </h3>
-        </v-card>
-        <v-btn color="primary" @click="nextStep(3)">Continue</v-btn>
-      </v-stepper-content>
-      <v-stepper-content step="3">
-        <v-card color="lighten-1" class="mb-5" height="200px">
-            <h2> Dont refresh or close this page before finishing. </h2>
-            Send {{xlmAmount}} XLMs to below address to purchase EVER token
-            <h3> address : {{publicKey}} </h3>
+      <v-stepper-header>
+        <v-stepper-step :complete="step > 1" step="1">Info</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step :complete="step > 2" step="2">Account</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step :complete="step > 3" step="3">Payment</v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="4">Finish</v-stepper-step>
+      </v-stepper-header>
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <v-card color="cyan darken-2" class="white--text">
+              <v-card-title primary-title>
+                <div class="headline"> Enter amount of XLM you want to contribute </div>
+                <div>You will send xlm for contribution in next steps</div>
+              </v-card-title>
+              <v-card-actions>
+                <v-container>
+                  <v-layout column>
+                    <v-form>
+                      <v-text-field
+                            light :solo="true"
+                            v-model="xlmAmount"
+                            label="XLM"
+                            type="number"
+                            required
+                      ></v-text-field>
+                    </v-form>
+                    <v-layout justify-end class="mt-5">
+                      <v-btn @click="nextStep(2)">Next ></v-btn>
+                    </v-layout>
+                  </v-layout>
+                </v-container>
+              </v-card-actions>
+          </v-card>
+        </v-stepper-content>
 
-            <h2>XLM funded: {{xlmFunded}}</h2>
-        </v-card>
-        <v-btn color="primary" @click="nextStep(4)" :disabled="!funded">Continue</v-btn>
-      </v-stepper-content>
-      <v-stepper-content step="4">
-        <v-card color="lighten-1" class="mb-5" height="200px">
-            <p v-show="!done">Purchasing ever tokens.</p>
-            <p v-show="done"> Ever token purchased </p>
-            <p  class="red--text" v-if="errorOnContribute">{{errorOnContribute}}</p>
-        </v-card>
-        <v-btn color="primary" :to="{name: 'dashboard'}" :disabled="!done">Done</v-btn>
-      </v-stepper-content>
-    </v-stepper-items>
-  </v-stepper>
-  
+        <v-stepper-content step="2">
+          <v-card color="cyan darken-2" class="white--text">
+            <v-card-title primary-title>
+              <div class="headline"> Account details </div>
+              <div> Copy these account details and keep safe, EVER tokens will be sent to this account.</div>
+            </v-card-title>
+            <v-card-text>
+              public : <h3> {{publicKey}} </h3>
+              secret : <h3> {{secretKey}} </h3>
+            </v-card-text>
+            <v-card-actions>
+              <v-layout justify-end class="mt-5">
+                <v-btn @click="nextStep(3)">Next ></v-btn>
+              </v-layout>
+            </v-card-actions>
+          </v-card>
+        </v-stepper-content>
+
+        <v-stepper-content step="3">
+          <v-card color="cyan darken-2" class="white--text">
+            <v-card-title primary-title>
+              <v-layout column>
+                <div class="headline"> Make Payment of {{paymentAmount}} XLMs</div>
+                <div> Send {{paymentAmount}} XLMs to below address to purchase EVER token </div>
+                <p> Note: 3 XLM extra to cover base reserve and transaction fees</p>
+              </v-layout>
+            </v-card-title>
+            <v-card-text>
+              <v-layout column>
+                <div class="mb-5"> address :<h3> {{publicKey}} </h3></div>
+                <v-divider></v-divider>
+                <v-flex class="mt-5">
+                  <v-layout justify-space-between>
+                    <h2>XLM funded: {{xlmFunded}}</h2>
+                    <!-- <div class="fa fa-sync fa-spin"></div> -->
+                  </v-layout>
+                </v-flex>
+              </v-layout>
+            </v-card-text>
+            <v-card-actions>
+              <v-layout justify-end class="mt-5">
+                <v-btn @click="nextStep(4)" :disabled="!funded">Next ></v-btn>
+              </v-layout>
+            </v-card-actions>
+          </v-card>
+        </v-stepper-content>
+        <v-stepper-content step="4">
+          <v-card color="cyan darken-2" class="white--text">
+              <v-card-title primary-title>
+                <v-layout column>
+                  <div class="headline"> Proccessing</div>
+                </v-layout>
+              </v-card-title>
+              <v-card-text>
+                <p v-show="!done">Purchasing ever tokens.</p>
+                <!-- <p v-show="done"> Ever token purchased </p> -->
+                <v-alert :value="done" type="success">
+                  Ever tokens purchased
+                </v-alert>
+                <v-alert :value="errorOnContribute" type="error">
+                  {{errorOnContribute}}
+                </v-alert>
+                <!-- <p  class="red--text" v-if="errorOnContribute">{{errorOnContribute}}</p> -->
+              </v-card-text>
+              <v-card-actions>
+                <v-layout justify-end class="mt-5">
+                  <v-btn :to="{name: 'dashboard'}" :disabled="!done">Done</v-btn>
+                </v-layout>
+            </v-card-actions>
+          </v-card>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
+  </v-layout>
 </template>
 
 
@@ -72,7 +130,7 @@ export default {
     return {
       done: false,
       step: 0,
-      xlmAmount: 0,
+      xlmAmount: null,
       publicKey: "",
       secretKey: "",
       xlmFunded: 0,
@@ -151,8 +209,11 @@ export default {
     }
   },
   computed: {
-    funded: function() {
+    funded() {
       return this.xlmFunded ? true : false;
+    },
+    paymentAmount(){
+      return parseInt(this.xlmAmount) + 3;
     }
   }
 };
