@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/login'
+import Signup from '@/pages/signup'
 import Dashboard from '@/pages/dashboard'
 import Contribute from '@/pages/contribute'
 import NotFound from '@/components/NotFound'
@@ -15,6 +16,11 @@ const router = new Router({
     {
       path: '/',
       redirect: '/login'
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup
     },
     {
       path: '/login',

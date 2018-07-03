@@ -1,0 +1,151 @@
+<template>
+<v-layout column align-center>
+  <v-form ref="form" v-model="valid" lazy-validation class="signup-form" :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="E-mail"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="name"
+      :rules="nameRules"
+      :counter="10"
+      label="Full Name"
+      required
+    ></v-text-field>
+
+    <birthdate-picker v-model="birthdate"></birthdate-picker>
+
+    <v-layout column class="mt-3">
+      <label>Gender:</label>
+      <v-radio-group v-model="gender" row>
+        <v-radio label="Male" value="male" ></v-radio>
+        <v-radio label="Female" value="female"></v-radio>
+      </v-radio-group>
+    </v-layout>
+
+    <v-text-field
+      v-model="password"
+      ref="password"
+      :append-icon="passEye ? 'visibility' : 'visibility_off'"
+      :append-icon-cb="() => (passEye = !passEye)"
+      :type="passEye ? 'password' : 'text'"
+      label="Enter password"
+      hint="At least 8 characters"
+      :rules="passwordRules"
+      counter
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="passwordConfirm"
+      :append-icon="passConfimEye ? 'visibility' : 'visibility_off'"
+      :append-icon-cb="() => (passConfimEye = !passConfimEye)"
+      :type="passConfimEye ? 'password' : 'text'"
+      label="Confirm password"
+      ref="passwordConfirm"
+      hint="At least 8 characters"
+      name="passfield"
+      :rules="[() => passwordConfirm == password || 'Password do not match']"
+      counter
+      required
+    ></v-text-field>
+
+    <v-checkbox
+      v-model="termsCheckbox"
+      :rules="[v => !!v || 'You must agree to continue!']"
+      label="Acecept Terms"
+      required
+    ></v-checkbox>
+    <p v-if="error" class="red--text">{{error}}</p>
+    <v-layout justify-center>
+      <v-btn
+        :disabled="!valid"
+        @click="submit"
+        color="blue darken-2 white--text" large>
+        Signup
+      </v-btn>
+    </v-layout>
+
+  </v-form>
+</v-layout>
+</template>
+
+<script>
+import birthdatePicker from '../components/birthdatePicker';
+
+export default {
+  data: () => ({
+    error: "",
+    valid: true,
+    name: "",
+    nameRules: [
+      v => !!v || "Name is required",
+      v => (v && v.length <= 10) || "Name must be less than 10 characters"
+    ],
+    email: "",
+    emailRules: [
+      v => !!v || "E-mail is required",
+      v =>
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "E-mail must be valid"
+    ],
+    password: "",
+    passEye: true,
+    passwordRules: [
+      v => !!v || "Password is required",
+      v => (v && v.length >= 8) || "Password must have minimum 8 charater"
+    ],
+    passwordConfirm: this.password,
+    passConfimEye: true,
+    termsCheckbox: false,
+    birthdate: null,
+    gender: 'male'
+  }),
+
+  methods: {
+    submit() {
+      if (this.$refs.form.validate() && this.birthdate) {
+        this.$store
+          .dispatch("signup", {
+            name: this.name,
+            email: this.email,
+            birthdate: this.birthdate,
+            gender: this.gender,
+            password: this.password,
+
+          })
+          .catch(error => {
+            this.error = error.message;
+          });
+      }else{
+        this.error = "Please fill in all the details"
+      }
+    },
+    checkConfirmPass() {
+      return this.passwordConfirm == this.password || "Password do not match";
+    }
+  },
+
+  components: {
+    birthdatePicker
+  },
+
+  created(){
+    if(this.$store.getters.isLoggedIn){
+      this.$router.replace('/dashboard');
+    }
+  }
+};
+</script>
+<style scoped>
+  .smallScreen {
+    width: 100%;
+  }
+
+  .mediumScreen {
+    width: 400px;
+  }
+</style>

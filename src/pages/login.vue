@@ -1,53 +1,92 @@
 <template>
-  <v-layout justify-center class="mt-5">
-      <v-tabs class="modal"
-        v-model="active"
-        color="blue darken-4"
-        dark
-        slider-color="yellow"
-        grow
-      >
-        <v-tab ripple>
-          Signup
-        </v-tab>
-        <v-tab ripple>
-          Login
-        </v-tab>
-        <v-tab-item key="Signup" class="tab-item">
-          <signup></signup>
-        </v-tab-item>
-        <v-tab-item key="Login" class="tab-item">
-          <login></login>
-        </v-tab-item>
-      </v-tabs>
-  </v-layout>
+<v-layout align-center column class="mt-5">
+  <h1 class="blue--text text--darken-4"> Login </h1>
+
+  <v-form ref="form" v-model="valid" lazy-validation class="mt-5" :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="E-mail"
+      required
+    ></v-text-field>
+
+    <v-text-field
+      v-model="password"
+      ref="password"
+      :append-icon="passEye ? 'visibility' : 'visibility_off'"
+      :append-icon-cb="() => (passEye = !passEye)"
+      :type="passEye ? 'password' : 'text'"
+      label="Enter password"
+      hint="At least 8 characters"
+      :rules="passwordRules"
+      counter
+      required
+    ></v-text-field>
+    <v-layout justify-center>
+      <vue-recaptcha sitekey="6LfZKWEUAAAAADcvambBjO0PTVi0QW_Phjr7ra3y" class="mt-5"></vue-recaptcha>
+    </v-layout>
+    <p v-if="error" class="red--text">{{error}}</p>
+    <v-layout justify-center>
+      <v-btn
+        :disabled="!valid"
+        @click="submit" color="blue darken-2 white--text" class="mt-3" large>
+        Login
+      </v-btn>
+    </v-layout>
+  </v-form>
+</v-layout>
 </template>
 
-
 <script>
-import Login from "../components/Login.vue";
-import Signup from "../components/Signup.vue";
+import VueRecaptcha from 'vue-recaptcha';
 export default {
-  data() {
-    return {
-      active: null,
-    };
+  data: () => ({
+    error: '',
+    valid: true,
+    email: "",
+    emailRules: [
+      v => !!v || "E-mail is required",
+      v =>
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+        "E-mail must be valid"
+    ],
+    password: "",
+    passEye: true,
+    passwordRules: [
+      v => !!v || "Password is required",
+      v => (v && v.length >= 8) || "Password must have minimum 8 charater"
+    ]
+  }),
+
+  methods: {
+    submit() {
+      if (this.$refs.form.validate()) {
+        this.$store
+          .dispatch("login", {
+            email: this.email,
+            password: this.password
+          })
+          .catch(error => {
+            this.error = error.message;
+          });
+      }
+    }
   },
-  components: {
-    Login,
-    Signup
-  },
-  methods: {}
+  components: { VueRecaptcha },
+  created(){
+    if(this.$store.getters.isLoggedIn){
+      this.$router.replace('/dashboard');
+    }
+  }
 };
 </script>
+<style scoped>
+  .smallScreen {
+    width: 100%;
+  }
 
-<style>
-  .tab-item {
-    padding: 10px;
+  .mediumScreen {
+    width: 400px;
   }
-  .modal {
-    width: 500px;
-    border: 1px solid #2962FF;
-    border-radius: 5px;
-  }
+
 </style>
