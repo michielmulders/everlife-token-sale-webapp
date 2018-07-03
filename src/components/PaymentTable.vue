@@ -11,28 +11,26 @@
       <td class="text-xs-center">{{ props.item.everBalance }}</td>
       <td class="text-xs-center">{{ props.item.bonus }}</td>
       <td class="text-xs-center">{{ props.item.total }}</td>
-      <td class="text-xs-center"><v-btn flat icon color="black"><i class="fa fa-cogs"></i></v-btn></td>
+      <td class="text-xs-center"><manage-account :ca2="props.item.ca2" :xdr2="props.item.xdr2" :xdr3="props.item.xdr3"></manage-account></td>
     </template>
   </v-data-table>
 </template>
 
 <script>
 import { getAccountBalance, submitXdr } from "../stellar/transaction";
+import ManageAccount from "../components/manageAccount";
+
 export default {
   props: ["contributions"],
   data() {
     return {
       headers: [
-        {
-          text: "Time",
-          align: "center",
-          sortable: false
-        },
-        { text: "XLM Paid", align: "center" },
-        { text: "EVER Purchased", align: "center" },
-        { text: "Bonus", align: "center" },
-        { text: "Total EVER", align: "center" },
-        { text: "Manage", align: "center" },
+        { text: "Time", align: "center", sortable: false, value: 'time' },
+        { text: "XLM Paid", align: "center", sortable: false, value: 'xlmAmount' },
+        { text: "EVER Purchased", align: "center", sortable: false, value: 'everBalance' },
+        { text: "Bonus", align: "center", sortable: false, value: 'bonus' },
+        { text: "Total EVER", align: "center", sortable: false, value: 'total' },
+        { text: "Manage", align: "center", sortable: false},
       ]
     };
   },
@@ -46,7 +44,10 @@ export default {
             xlmAmount: payment.xlmAmount,
             everBalance: await this.everBalance(payment.ca2),
             bonus: 0,
-            total: this.everBalance // will be + bonus later
+            total: this.everBalance, // will be + bonus later
+            ca2: payment.ca2,
+            xdr2: payment.xdr2,
+            xdr3: payment.xdr3,
           };
           entry.total = entry.everBalance;
           return entry;
@@ -71,6 +72,10 @@ export default {
       });
       return everBalance.balance;
     }
+  },
+
+  components: {
+    ManageAccount
   }
 };
 </script>
