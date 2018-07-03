@@ -1,5 +1,5 @@
 <template>
-  <v-layout justify-center class="mt-5">
+  <v-layout justify-center>
     <v-stepper v-model="step" class="modal">
       <v-stepper-header>
         <v-stepper-step :complete="step > 1" step="1">Info</v-stepper-step>
@@ -12,7 +12,7 @@
       </v-stepper-header>
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-card color="cyan darken-2" class="white--text">
+          <v-card color="grey lighten-4" class="grey--text text--darken-3">
               <v-card-title primary-title>
                 <div class="headline"> Enter amount of XLM you want to contribute </div>
                 <div>You will send xlm for contribution in next steps</div>
@@ -30,7 +30,7 @@
                       ></v-text-field>
                     </v-form>
                     <v-layout justify-end class="mt-5">
-                      <v-btn @click="nextStep(2)">Next ></v-btn>
+                      <v-btn @click="nextStep(2)" color="blue darken-2 white--text">Next ></v-btn>
                     </v-layout>
                   </v-layout>
                 </v-container>
@@ -39,7 +39,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-card color="cyan darken-2" class="white--text">
+          <v-card color="grey lighten-4" class="grey--text text--darken-3">
             <v-card-title primary-title>
               <div class="headline"> Account details </div>
               <div> Copy these account details and keep safe, EVER tokens will be sent to this account.</div>
@@ -50,14 +50,14 @@
             </v-card-text>
             <v-card-actions>
               <v-layout justify-end class="mt-5">
-                <v-btn @click="nextStep(3)">Next ></v-btn>
+                <v-btn @click="nextStep(3)" color="blue darken-2 white--text">Next ></v-btn>
               </v-layout>
             </v-card-actions>
           </v-card>
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-card color="cyan darken-2" class="white--text">
+          <v-card color="grey lighten-4" class="grey--text text--darken-3">
             <v-card-title primary-title>
               <v-layout column>
                 <div class="headline"> Make Payment of {{paymentAmount}} XLMs</div>
@@ -79,13 +79,13 @@
             </v-card-text>
             <v-card-actions>
               <v-layout justify-end class="mt-5">
-                <v-btn @click="nextStep(4)" :disabled="!funded">Next ></v-btn>
+                <v-btn @click="nextStep(4)" :disabled="!funded" color="blue darken-2 white--text">Next ></v-btn>
               </v-layout>
             </v-card-actions>
           </v-card>
         </v-stepper-content>
         <v-stepper-content step="4">
-          <v-card color="cyan darken-2" class="white--text">
+          <v-card color="grey lighten-4" class="grey--text text--darken-3">
               <v-card-title primary-title>
                 <v-layout column>
                   <div class="headline"> Proccessing</div>
@@ -93,18 +93,16 @@
               </v-card-title>
               <v-card-text>
                 <p v-show="!done">Purchasing ever tokens.</p>
-                <!-- <p v-show="done"> Ever token purchased </p> -->
                 <v-alert :value="done" type="success">
                   Ever tokens purchased
                 </v-alert>
                 <v-alert :value="errorOnContribute" type="error">
                   {{errorOnContribute}}
                 </v-alert>
-                <!-- <p  class="red--text" v-if="errorOnContribute">{{errorOnContribute}}</p> -->
               </v-card-text>
               <v-card-actions>
                 <v-layout justify-end class="mt-5">
-                  <v-btn :to="{name: 'dashboard'}" :disabled="!done">Done</v-btn>
+                  <v-btn :to="{name: 'dashboard'}" :disabled="!done" color="blue darken-2 white--text">Done</v-btn>
                 </v-layout>
             </v-card-actions>
           </v-card>
@@ -130,7 +128,7 @@ export default {
     return {
       done: false,
       step: 0,
-      xlmAmount: null,
+      xlmAmount: 10000,
       publicKey: "",
       secretKey: "",
       xlmFunded: 0,
@@ -149,7 +147,7 @@ export default {
         transaction1,
         transaction2,
         transaction3
-      } = await generateIcoTransactions(this.xlmAmount, this.publicKey, this.secretKey);
+      } = await generateIcoTransactions(parseInt(this.xlmFunded)-3, this.publicKey, this.secretKey);
       const xdr1 = transaction1
         .toEnvelope()
         .toXDR()

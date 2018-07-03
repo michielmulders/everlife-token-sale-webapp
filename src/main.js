@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import AsyncComputed from 'vue-async-computed'
+import VueParticles from 'vue-particles'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
@@ -11,6 +12,7 @@ import './filters/dateFilters'
 
 Vue.use(Vuetify)
 Vue.use(AsyncComputed);
+Vue.use(VueParticles)
 
 Vue.config.productionTip = false
 

@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="mt-5" column>
+  <v-layout column>
     <v-layout row>
       <v-flex>
         <p color="red">{{user.name}}</p>

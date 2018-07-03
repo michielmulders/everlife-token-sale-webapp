@@ -6,12 +6,7 @@ export default {
     const response = await axios.post('api/auth/register', user)
     localStorage.setItem('token', response.data.accessToken);
     state.commit('storeToken', response.data.accessToken);
-    state.commit('storeUser', {
-      name: user.name,
-      email: user.email,
-      kyc: false,
-      whitelist: false,
-    })
+    state.commit('storeUser', response.data.user);
     router.push({ path: '/dashboard' });
   },
 
@@ -21,7 +16,6 @@ export default {
     state.commit('storeToken', response.data.accessToken);
     state.commit('storeUser', response.data.user);
     router.push({ path: '/dashboard' });
-    // return response;
   },
 
   updateProfile(state) {
