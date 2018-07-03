@@ -4,11 +4,11 @@
         <v-container class="my-3">
             <v-layout row align-content-space-between>
                 <v-flex>
-                    <a href="/"><img alt="logo" src="images/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></a>
+                    <a href="/"><img alt="logo" src="/static/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></a>
                 </v-flex>
                 <v-flex>
                     <v-layout justify-end hidden-md-and-up>
-                        <i class="fa fa-bars fa-2x" @click.stop="drawer = !drawer"></i>
+                        <i class="fa fa-bars fa-2x white--text" @click.stop="drawer = !drawer"></i>
                     </v-layout>
                     <v-layout justify-end hidden-sm-and-down>
                             <v-btn href
@@ -48,6 +48,23 @@
             <div class="overlay-bubble-5"></div>
             <div class="overlay-bubble-6"></div>
         </div>
+        <vue-particles
+            color="#dedede"
+            :particleOpacity="0.7"
+            :particlesNumber="80"
+            shapeType="circle"
+            :particleSize="4"
+            linesColor="#dedede"
+            :linesWidth="1"
+            :lineLinked="true"
+            :lineOpacity="0.4"
+            :linesDistance="150"
+            :moveSpeed="3"
+            :hoverEffect="true"
+            hoverMode="grab"
+            :clickEffect="true"
+            clickMode="push"
+        ></vue-particles>
     </div>
 </div>
 </template>
@@ -68,7 +85,10 @@ export default {
                 { title: "Logout", to: "/logout" }
             ]
           }
-          return [];
+          return [
+              { title: "Login", to: "/login" },
+              { title: "Signup", to: "/signup" },
+          ];
       }
   }
 };
@@ -93,8 +113,8 @@ export default {
 .header-angle-bg{
     position:absolute;
     left:0;
-    top:-200%;
-    height:217%;
+    top:0;
+    height:110px;
     width:100%;
     content:'';
     overflow:hidden;
