@@ -3,16 +3,19 @@
 import Vue from 'vue'
 import AsyncComputed from 'vue-async-computed'
 import VueParticles from 'vue-particles'
+import VueClipboard from 'vue-clipboard2'
+
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import store from './store'
-import './filters/dateFilters' 
+import './filters/dateFilters'
+import 'vuetify/dist/vuetify.min.css'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
 Vue.use(AsyncComputed);
-Vue.use(VueParticles)
+Vue.use(VueParticles);
+Vue.use(VueClipboard);
 
 Vue.config.productionTip = false
 

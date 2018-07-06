@@ -59,8 +59,8 @@ export const getAccountBalance = function (publicKey) {
 export const generateIcoTransactions = async function (xlmAmount, caPublic, caSecret) {
 const everToken = store.getters.everToken;
 
-    const account = await server.loadAccount(caPublic);
-    console.log(account.sequenceNumber());
+    var account = await server.loadAccount(caPublic);
+
     const transaction1 = new StellarSdk.TransactionBuilder(account)
         .addOperation(StellarSdk.Operation.manageOffer({
             selling: new StellarSdk.Asset.native,
@@ -69,9 +69,7 @@ const everToken = store.getters.everToken;
             price: 0.5,
             offerId: 0,
         })).build();
-    const sequenceNumber = account.sequenceNumber();
-    account.sequence = sequenceNumber;
-    console.log(account.sequenceNumber());
+
     const transaction2 = new StellarSdk.TransactionBuilder(account) // needs to be time locked with D ICO conclusion date
         .addOperation(StellarSdk.Operation.setOptions({
             masterWeight: 1,
@@ -83,9 +81,9 @@ const everToken = store.getters.everToken;
                 weight: 0
             }
         })).build();
-    // account.incrementSequenceNumber();
-    account.sequence = sequenceNumber;
-    console.log(account.sequenceNumber());
+
+    account = await server.loadAccount(caPublic);
+    account.incrementSequenceNumber();
     const transaction3 = new StellarSdk.TransactionBuilder(account)
         .addOperation(StellarSdk.Operation.manageOffer({
             selling: new StellarSdk.Asset(everToken.code, everToken.GA),
