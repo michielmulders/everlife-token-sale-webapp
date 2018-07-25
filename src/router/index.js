@@ -10,6 +10,12 @@ import Logout from '@/components/logout'
 import store from '../store';
 Vue.use(Router)
 
+/*      outcome/
+ *  Contains /login, /signup, /dashboard and /contribute routes, 
+ *  /dashboard and /contribute is required authentication.
+ *  / route redirect to /login route  
+ */
+
 const router = new Router({
   mode: 'history',
   routes: [
