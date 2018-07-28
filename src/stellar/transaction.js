@@ -42,6 +42,11 @@ export const addDASignerAndUpdateWeight = async function (caPublic, caSecret) {
     return result;
 }
 
+/*   outcome/
+ * This function will return the public and secret keys from stellar sdk account.
+ *  
+ */
+
 export const generateAccount = function () {
     var pair = StellarSdk.Keypair.random();
     return {
@@ -49,6 +54,12 @@ export const generateAccount = function () {
         secretKey: pair.secret()
     }
 }
+
+/*   outcome/
+ * This function will return the user account balance.
+ * By using public key of user.
+ *  
+ */
 
 export const getAccountBalance = function (publicKey) {
     return server.accounts()
