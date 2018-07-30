@@ -1,10 +1,11 @@
 import moment from 'moment'
 import Vue from 'vue'
 
-/*   outcome/
- * This function will filter the valid value
- * and return the date in format MM/DD/YYYY hh:mm.
- *  
+/*      understand/
+ * Vue allows us to add 'filters' to display values.
+ *
+ *      outcome/
+ * We filter the given value into a nicely formatted date.
  */
 Vue.filter('formatDate', function(value) {
   if (value) {
