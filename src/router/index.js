@@ -26,12 +26,14 @@ const router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
+      meta: { title: "Signup" }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: { title: "Login" }
     },
     {
       path: '/logout',
@@ -42,13 +44,13 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true }
+      meta: { title: "Dashboard" }
     },
     {
       path: '/contribute',
       name: 'contribute',
       component: Contribute,
-      meta: { requiresAuth: true }
+      meta: { title: "Contribute" }
     },
     { path: '*', name: 'notfound', component: NotFound }
   ]
@@ -66,5 +68,10 @@ const router = new Router({
 //     next()
 //   }
 // })
+
+router.beforeEach((to, from, next) => {
+  document.title = "Everlife.AI Token Sale - " + to.meta.title
+  next()
+})
 
 export default router
