@@ -1,6 +1,6 @@
 <template>
 <v-layout column align-center>
-  <v-form ref="form" v-model="valid" lazy-validation class="signup-form" :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
+  <v-form ref="form" lazy-validation class="signup-form" :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
     <v-text-field
       v-model="email"
       :rules="emailRules"
@@ -59,6 +59,9 @@
       label="Acecept Terms"
       required
     ></v-checkbox>
+    <v-layout justify-center>
+      <vue-recaptcha sitekey="6LdfOmgUAAAAAK5Y9Q6TcrIeHVFyw97A9ijOlxvf" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
+    </v-layout>
     <p v-if="error" class="red--text">{{error}}</p>
     <v-layout justify-center>
       <v-btn
@@ -74,12 +77,13 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha';
 import birthdatePicker from '../components/birthdatePicker';
 
 export default {
   data: () => ({
     error: "",
-    valid: true,
+    valid: false,
     name: "",
     nameRules: [
       v => !!v || "Name is required",
@@ -96,18 +100,23 @@ export default {
     passEye: true,
     passwordRules: [
       v => !!v || "Password is required",
-      v => (v && v.length >= 8) || "Password must have minimum 8 charater"
+      v => (v && v.length >= 8) || "Password must have minimum 8 character"
     ],
     passwordConfirm: this.password,
     passConfimEye: true,
     termsCheckbox: false,
     birthdate: null,
-    gender: 'male'
+    gender: 'male',
+    reCaptcha: null,
   }),
 
   methods: {
     submit() {
       if (this.$refs.form.validate() && this.birthdate) {
+        if(!this.reCaptcha){
+          this.error = "Captcha Required";
+          return;
+        }
         this.$store
           .dispatch("signup", {
             name: this.name,
@@ -115,6 +124,7 @@ export default {
             birthdate: this.birthdate,
             gender: this.gender,
             password: this.password,
+            reCaptchaResponse: this.reCaptcha,
 
           })
           .catch(error => {
@@ -126,11 +136,16 @@ export default {
     },
     checkConfirmPass() {
       return this.passwordConfirm == this.password || "Password do not match";
+    },
+    captchaResponse(response){
+      this.valid = true;
+      this.reCaptcha = response;
     }
   },
 
   components: {
-    birthdatePicker
+    birthdatePicker,
+    VueRecaptcha
   },
 
   created(){

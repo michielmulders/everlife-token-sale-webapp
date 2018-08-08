@@ -11,6 +11,12 @@ import Logout from '@/components/Logout'
 import store from '../store';
 Vue.use(Router)
 
+/*      outcome/
+ *  Contains /login, /signup, /dashboard and /contribute routes, 
+ *  /dashboard and /contribute is required authentication.
+ *  / route redirect to /login route  
+ */
+
 const router = new Router({
   mode: 'history',
   routes: [
@@ -21,12 +27,14 @@ const router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: Signup
+      component: Signup,
+      meta: { title: "Signup" }
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      meta: { title: "Login" }
     },
     {
       path: '/logout',
@@ -37,13 +45,13 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { requiresAuth: true }
+      meta: { title: "Dashboard" }
     },
     {
       path: '/contribute',
       name: 'contribute',
       component: Contribute,
-      meta: { requiresAuth: true }
+      meta: { title: "Contribute" }
     },
     {
       path: '/kyc',
@@ -67,5 +75,10 @@ const router = new Router({
 //     next()
 //   }
 // })
+
+router.beforeEach((to, from, next) => {
+  document.title = "Everlife.AI Token Sale - " + to.meta.title
+  next()
+})
 
 export default router

@@ -14,6 +14,11 @@ export default {
     state.isDocsAvailable = !!user.kycDocs.document1;
   },
 
+/*   outcome/
+ * This function will clear the token and it will set it's value to null.
+ *  
+ */
+
   clearToken(state) {
     state.token = null;
   },
