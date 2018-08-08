@@ -26,7 +26,6 @@ export default {
   computed: {
     ...mapGetters(["user"])
   },
-  
   beforeMount() {
     this.$store.dispatch("updateProfile");
   },

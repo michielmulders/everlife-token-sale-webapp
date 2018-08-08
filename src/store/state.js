@@ -5,7 +5,12 @@ export default {
         email: '',
         kyc: false,
         whitelist: false,
-        contributions: []
+        contributions: [],
+        kycDocs: {
+            document1: null,
+            document2: null
+        },
+        idmStatus: "",
     },
     ico: {
         startDate: null,
@@ -17,5 +22,7 @@ export default {
         GA: 'GBGXEJ73RRP5UBRABKYXCECF25YLO35GEFXJUJHPUWOICSK7ODLWEDC4',
         code: 'EVER',
         limit: '500000000'
-    }
+    },
+    isDocsUploaded: false,
+    isDocsAvailable: false,
 }

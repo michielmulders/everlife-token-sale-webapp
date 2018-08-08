@@ -3,9 +3,10 @@ import Router from 'vue-router'
 import Login from '@/pages/login'
 import Signup from '@/pages/signup'
 import Dashboard from '@/pages/dashboard'
+import Kyc from '@/pages/kyc'
 import Contribute from '@/pages/contribute'
 import NotFound from '@/components/NotFound'
-import Logout from '@/components/logout'
+import Logout from '@/components/Logout'
 
 import store from '../store';
 Vue.use(Router)
@@ -43,6 +44,12 @@ const router = new Router({
       name: 'contribute',
       component: Contribute,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/kyc',
+      name: 'kyc',
+      component: Kyc
+      // meta: { requiresAuth: true }
     },
     { path: '*', name: 'notfound', component: NotFound }
   ]
