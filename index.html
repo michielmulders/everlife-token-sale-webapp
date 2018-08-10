@@ -1,15 +1,89 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>everlifeicowebapp</title>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>everlifeicowebapp</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+    crossorigin="anonymous">
+  <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+  <!-- IDM styles -->
+  <style>
+    #country-section-title,
+    #address-section-title,
+    #personal-section-title,
+    #contact-section-title,
+    .idm-container hr {
+      display: none;
+    }
+
+    #country-section-header,
+    #personal-section-header,
+    #contact-section-header,
+    #address-section-header {
+      margin: 0;
+    }
+
+    #country,
+    #dob_day,
+    #dob_month,
+    #dob_year {
+      padding: 5px;
+    }
+
+    .idm-col-third {
+      padding: 5px !important;
+    }
+
+    #full-name-label {
+      margin: 0;
+    }
+
+    #phone {
+      padding: 9px !important;
+    }
+
+    #next {
+      background-color: #1976d2 !important;
+      color: white !important;
+    }
+
+    #footer-section .idm-row {
+      margin: 20px 0 !important;
+    }
+
+    h4 {
+      color: #0d47a1 !important;
+      font-size: medium !important;
+      margin: 20px 0 2px 0;
+    }
+
+    select option {
+      background-color: white !important;
+      color: black !important;
+    }
+
+    select:focus {
+      background-color: #497dfa !important;
+    }
+
+    .idm-row {
+      margin: 0 !important;
+    }
+
+    p {
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <script>
+    var _idm; 
+  </script>
+</body>
 </html>

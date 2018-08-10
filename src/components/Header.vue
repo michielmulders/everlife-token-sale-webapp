@@ -81,6 +81,7 @@ export default {
           if(this.$store.getters.isLoggedIn){
             return [
                 { title: "Dashboard", to: "/dashboard" },
+                { title: "KYC", to: "/kyc" },
                 { title: "Contribute", to: "/contribute" },
                 { title: "Logout", to: "/logout" }
             ]

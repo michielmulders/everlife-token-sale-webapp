@@ -14,4 +14,20 @@ export default {
     everToken(state){
         return state.everToken;
     },
+
+    isDocsAvailable(state) {
+        return state.isDocsAvailable;
+    },
+
+    isDocsUploaded(state) {
+        return state.isDocsUploaded;
+    },
+
+    getKycDocs (state) {
+        return state.user.kycDocs;
+    },
+    
+    idmStatus(state) {
+        return state.user.idmStatus;
+    } 
 }
