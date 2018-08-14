@@ -2,7 +2,7 @@
 <v-layout align-center column class="mt-5">
   <h1 class="blue--text text--darken-4"> Login </h1>
 
-  <v-form ref="form" lazy-validation class="mt-5" :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
+  <v-form  v-model="valid" ref="form" lazy-validation class="mt-5" :class="{'smallScreen': $vuetify.breakpoint.smAndDown, 'mediumScreen': $vuetify.breakpoint.mdAndUp}">
     <v-text-field
       v-model="email"
       :rules="emailRules"
@@ -22,9 +22,9 @@
       counter
       required
     ></v-text-field>
-    <v-layout justify-center>
+    <!-- <v-layout justify-center>
       <vue-recaptcha sitekey="6LdfOmgUAAAAAK5Y9Q6TcrIeHVFyw97A9ijOlxvf" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
-    </v-layout>
+    </v-layout> -->
     <p v-if="error" class="red--text">{{error}}</p>
     <v-layout justify-center>
       <v-btn
@@ -62,15 +62,15 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        if(!this.reCaptcha){
-          this.error = "Captcha Required";
-          return;
-        }
+        // if(!this.reCaptcha){
+        //   this.error = "Captcha Required";
+        //   return;
+        // }
         this.$store
           .dispatch("login", {
             email: this.email,
             password: this.password,
-            reCaptchaResponse: this.reCaptcha
+            // reCaptchaResponse: this.reCaptcha
           })
           .catch(error => {
             this.error = error.message;
