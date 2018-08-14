@@ -7,8 +7,8 @@
             </v-flex>
             <v-flex>
                 <v-layout justify-end>
-                    <a href="#" class="white--text footer-link">Privacy Policy</a>
-                    <a href="#" class="white--text footer-link ml-3">Terms & Conditions</a>
+                    <a href="https://everlife.ai/privacy-policy.htm" target="_blank" class="white--text footer-link">Privacy Policy</a>
+                    <a href="https://everlife.ai/terms.htm" target="_blank" class="white--text footer-link ml-3">Terms & Conditions</a>
                 </v-layout>
             </v-flex>
         </v-layout>

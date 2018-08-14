@@ -14,8 +14,8 @@
         <v-stepper-content step="1">
           <v-card color="grey lighten-4" class="grey--text text--darken-3">
               <v-card-title primary-title>
-                <div class="headline"> Enter amount of XLM you want to contribute </div>
-                <div>You will send xlm for contribution in next steps</div>
+                <div class="headline"> Enter the amount of XLM you want to contribute </div>
+                <div>You will send xlm for contribution in the next steps</div>
               </v-card-title>
               <v-card-actions>
                 <v-container>
@@ -187,7 +187,11 @@ export default {
         transaction1,
         transaction2,
         transaction3
-      } = await generateIcoTransactions((parseInt(this.xlmFunded)-3).toString(), this.publicKey, this.secretKey);
+      } = await generateIcoTransactions(
+        (parseInt(this.xlmFunded) - 3).toString(),
+        this.publicKey,
+        this.secretKey
+      );
       const xdr1 = transaction1
         .toEnvelope()
         .toXDR()
@@ -204,7 +208,7 @@ export default {
         XDR1: xdr1,
         XDR2: xdr2,
         XDR3: xdr3,
-        xlmAmount: this.xlmAmount,
+        xlmAmount: parseInt(this.xlmFunded) - 3,
         ca2: this.publicKey
       });
       return true;
@@ -230,8 +234,10 @@ export default {
         }, 15000);
       }
       if (nextStep == 4) {
-        const result = addTrustline(this.publicKey, this.secretKey).then(result => {
-          addDASignerAndUpdateWeight(this.publicKey, this.secretKey).then(result => {
+        const result = addTrustline(this.publicKey, this.secretKey).then(
+          result => {
+            addDASignerAndUpdateWeight(this.publicKey, this.secretKey).then(
+              result => {
             this.contribute()
               .then(data => {
                 this.done = true;
@@ -241,8 +247,10 @@ export default {
                 this.errorOnContribute =
                   "Something went wrong, please try again.";
               });
-          });
-        });
+              }
+            );
+          }
+        );
       }
       this.step = nextStep;
     }
@@ -251,10 +259,10 @@ export default {
     funded() {
       return this.xlmFunded ? true : false;
     },
-    paymentAmount(){
+    paymentAmount() {
       return parseInt(this.xlmAmount) + 3;
     },
-    hasAcceptedStep3Terms(){
+    hasAcceptedStep3Terms() {
       return this.secureCheck1 && this.secureCheck2 && this.secureCheck3;
     }
   }
@@ -273,7 +281,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.termsCheck label{
+.termsCheck label {
   font-size: 10px;
 }
 </style>

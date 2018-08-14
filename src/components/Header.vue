@@ -115,7 +115,7 @@ export default {
     position:absolute;
     left:0;
     top:0;
-    height:110px;
+    height:120px;
     width:100%;
     content:'';
     overflow:hidden;

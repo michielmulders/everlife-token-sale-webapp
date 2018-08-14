@@ -16,16 +16,23 @@
                 <v-layout column>
                     <p> * Based on ICO status you can perform any one of the below action.</p>
                     <p> * Get account access will remove the spending limit and additional signers from your contribution account.</p>
-                    <p> * Keep below account secret ready and you can start spending your EVER token</p>
+                    <p> * Keep below account secret ready and you can start spending your EVER tokens</p>
                     <p class="contributionAddress"> {{ ca2 }}</p>
+                    <p> * You can copy the transaction XDR and keep it in your system to submit it manually using Stellar Laboratory.</p>
                     <v-flex>
-                        <v-layout row>
-                            <v-btn @click="submitXdr(xdr2)"
-                                :disabled="!trxBtnEnabled" color="blue darken-2 white--text"
-                                class="ma-3" large> Get Account Access </v-btn>
-                            <v-btn @click="submitXdr(xdr3)"
-                                :disabled="!trxBtnEnabled" color="blue darken-2 white--text"
-                                class="ma-3" large> Get refund </v-btn>
+                        <v-layout column>
+                            <v-layout row>
+                                <v-btn @click="submitXdr(xdr2)" class="manage-button"
+                                    :disabled="!trxBtnEnabled" color="blue darken-2 white--text"
+                                    > Get Account Access </v-btn>
+                                <v-btn v-clipboard:copy="xdr2" color="success">Copy <v-icon right>file_copy</v-icon></v-btn>
+                            </v-layout>
+                            <v-layout row>
+                                <v-btn @click="submitXdr(xdr3)" class="manage-button"
+                                    :disabled="!trxBtnEnabled" color="blue darken-2 white--text"
+                                    > Get refund </v-btn>
+                                <v-btn v-clipboard:copy="xdr2" color="success">Copy <v-icon right>file_copy</v-icon></v-btn>
+                            </v-layout>
                         </v-layout>
                     </v-flex>
                     <v-flex>
@@ -83,5 +90,8 @@ export default {
 <style scoped>
 .contributionAddress{
     word-wrap: break-word;
+}
+.manage-button {
+    width: 200px;
 }
 </style>
