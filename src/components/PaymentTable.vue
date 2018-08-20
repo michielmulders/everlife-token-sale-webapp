@@ -26,11 +26,11 @@ export default {
     return {
       headers: [
         { text: "Time", align: "center", sortable: false, value: 'time' },
-        { text: "XLM Paid", align: "center", sortable: false, value: 'xlmAmount' },
-        { text: "EVER Purchased", align: "center", sortable: false, value: 'everBalance' },
-        { text: "Bonus", align: "center", sortable: false, value: 'bonus' },
-        { text: "Total EVER", align: "center", sortable: false, value: 'total' },
-        { text: "Manage", align: "center", sortable: false},
+        { text: "Amount Paid", align: "center", sortable: false, value: 'xlmAmount' },
+        { text: "Purchased Tokens", align: "center", sortable: false, value: 'everBalance' },
+        { text: "Bonus Tokens", align: "center", sortable: false, value: 'bonus' },
+        { text: "Total Tokens", align: "center", sortable: false, value: 'total' },
+        { text: "Actions", align: "center", sortable: false},
       ]
     };
   },

@@ -3,44 +3,59 @@
     <v-layout v-bind="binding" wrap class="details-section">
       <v-flex class="pa-2">
         <v-card>
-          <v-card-title><h4>Account Details</h4></v-card-title>
+          <v-card-title><h4>Purchased Tokens</h4></v-card-title>
           <v-divider></v-divider>
           <v-list class="text--darken-3 grey--text">
             <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">Name: {{ user.name }}</v-list-tile-content>
+              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">{{ user.purchased_ever }} EVER</v-list-tile-content>
             </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">Email: {{ user.email }}</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text"><span>Kyc: <span class="text--darken-3" :class="getKycDetails().color+'--text'">{{ getKycDetails().text }}</span> </span></v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text"><v-btn v-show="isKycSubmitted()" outline color="success" class="ma-0" to="/kyc">Submit KYC</v-btn></v-list-tile-content>
-            </v-list-tile>
+            
+           
           </v-list>
         </v-card>
       </v-flex>
       <v-flex class="pa-2">
         <v-card>
-          <v-card-title><h4>Token Details</h4></v-card-title>
+          <v-card-title><h4>Bonus Tokens</h4></v-card-title>
           <v-divider></v-divider>
-          <v-list>
+          <v-list class="text--darken-3 grey--text">
             <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">Token: EVER (Alpha 4)</v-list-tile-content>
+              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">{{ user.bonus_ever }} EVER</v-list-tile-content>
             </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">Issuer ID: GDRCJ5OJTTIL4VUQZ52PCZYAUINEH2CUSP5NC2R6D6WQ47JBLG6DF5TE</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">Total Supply: 500,000,000</v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">Decimals: 7</v-list-tile-content>
-            </v-list-tile>
+            
+           
           </v-list>
         </v-card>
       </v-flex>
+      <v-flex class="pa-2">
+        <v-card>
+          <v-card-title><h4>Total Tokens</h4></v-card-title>
+          <v-divider></v-divider>
+          <v-list class="text--darken-3 grey--text">
+            <v-list-tile>
+              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">{{ user.total_ever }} EVER</v-list-tile-content>
+            </v-list-tile>
+            
+           
+          </v-list>
+        </v-card>
+      </v-flex>
+      
+    </v-layout>
+    <v-layout>
+        <v-flex class="pa-2">
+        <v-card height="500px" >
+          <v-card-title><h4>How it Works</h4></v-card-title>
+          <v-divider></v-divider>
+          
+           <table cellpadding="5"><tr><td style="padding: 10px;">Each token is equivalent to 0.1 USD with estimated crypto conversion listed next to each purchase amount. <BR/> <BR/>Please watch the video to understand how the purchase process works. <BR/>All purchases are subject to a 14 day freeze period. <BR/><BR/> <h3><A href="/contribute">Purchase EVER</a></h3></td><td style="padding: 10px;"> <iframe width="560" height="315" src="https://www.youtube.com/embed/A2DrqxT5M2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></td></tr>
+             </table>
+            
+           
+       
+        </v-card>
+      </v-flex>
+      
     </v-layout>
     <v-layout>
       <payment-table class="mt-5 table" :contributions="user.contributions"></payment-table>
