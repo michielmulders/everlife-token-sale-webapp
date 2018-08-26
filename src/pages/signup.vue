@@ -13,7 +13,12 @@
       :rules="nameRules"
       :counter="10"
       label="Full Name"
-      required
+
+    <v-text-field
+      v-model="phone"
+      :rules="phoneRules"
+      label="Phone"
+      maxLength="15"
     ></v-text-field>
 
     <birthdate-picker v-model="birthdate"></birthdate-picker>
@@ -96,6 +101,13 @@ export default {
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
         "E-mail must be valid"
     ],
+
+    phone: "",
+    phoneRules: [
+      v =>
+         /^([0-9]*)$/.test(v) || "Phone Number must be valid"
+    ],
+
     password: "",
     passEye: true,
     passwordRules: [
@@ -121,6 +133,7 @@ export default {
           .dispatch("signup", {
             name: this.name,
             email: this.email,
+            phone:this.phone,
             birthdate: this.birthdate,
             gender: this.gender,
             password: this.password,
