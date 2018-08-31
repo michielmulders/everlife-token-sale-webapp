@@ -11,8 +11,11 @@
     <v-text-field
       v-model="name"
       :rules="nameRules"
-      :counter="10"
+      :counter="70"
       label="Full Name"
+      maxLength="70"
+      required
+    ></v-text-field>
 
     <v-text-field
       v-model="phone"
@@ -91,8 +94,9 @@ export default {
     valid: false,
     name: "",
     nameRules: [
-      v => !!v || "Name is required"
-      // v => (v && v.length <= 10) || "Name must be less than 10 characters"
+      v => !!v || "Name is required",
+      v =>
+        /^([^0-9!@#\$%\^\&*\)\(+=._-])+$/.test(v) || "Name must be valid"
     ],
     email: "",
     emailRules: [
