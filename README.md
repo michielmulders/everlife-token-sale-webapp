@@ -1,6 +1,6 @@
-# everlifeai-token-sale-webapp
+# EverLife.AI Token Sale Webb App
 
-> everlife token sale web app
+EverLife token sale web app.
 
 ## Build Setup
 
@@ -20,3 +20,16 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Build Configuration
+
+|Variable               |Example Value|Description|
+|-----------------------|-------------|-----------|
+|CAPTCH_SITE_KEY        |6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI|Recapthca site key. (Generic dev key is shown as example.)|
+|STELLAR_ENV            |development||
+|IDM_PLUGIN_JS          |https://cd1st.identitymind.com/idm.min.js||
+|IDM_PLUGIN_TOKEN       ||See `tools/getIdmAppToken.js` for how to authenticate and get the token.|
+
+### Using IdentityMind integration for local testing
+
+The IDM plugin integration is locked against the hostname used for the application.

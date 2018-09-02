@@ -64,11 +64,11 @@
     <v-checkbox
       v-model="termsCheckbox"
       :rules="[v => !!v || 'You must agree to continue!']"
-      label="Acecept Terms"
+      label="Accept Terms"
       required
     ></v-checkbox>
     <v-layout justify-center>
-      <vue-recaptcha sitekey="6LdfOmgUAAAAAK5Y9Q6TcrIeHVFyw97A9ijOlxvf" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
+      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
     </v-layout>
     <p v-if="error" class="red--text">{{error}}</p>
     <v-layout justify-center>
@@ -124,6 +124,7 @@ export default {
     birthdate: null,
     gender: 'male',
     reCaptcha: null,
+    reCaptchaSiteKey: process.env.CAPTCH_SITE_KEY
   }),
 
   methods: {
