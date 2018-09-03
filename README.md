@@ -32,4 +32,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ### Using IdentityMind integration for local testing
 
-The IDM plugin integration is locked against the hostname used for the application.
+The IDM plugin integration is locked against the hostname and port used for the application. For staging we use `stageapp.everlife.ai` as the hostname and 80 for the port. This means that to test the IDM integration in a development environment you need to have your webapp listen to port `80` and that you need to put `stageapp.everlife.ai` to refer to `127.0.0.1` during the tests. 
