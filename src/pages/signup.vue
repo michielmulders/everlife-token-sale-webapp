@@ -24,7 +24,7 @@
       maxLength="15"
     ></v-text-field>
 
-    <birthdate-picker v-model="birthdate"></birthdate-picker>
+    
 
     <v-layout column class="mt-3">
       <label>Gender:</label>
