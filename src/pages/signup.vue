@@ -24,16 +24,6 @@
       maxLength="15"
     ></v-text-field>
 
-    
-
-    <v-layout column class="mt-3">
-      <label>Gender:</label>
-      <v-radio-group v-model="gender" row>
-        <v-radio label="Male" value="male" ></v-radio>
-        <v-radio label="Female" value="female"></v-radio>
-      </v-radio-group>
-    </v-layout>
-
     <v-text-field
       v-model="password"
       ref="password"
