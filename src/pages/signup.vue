@@ -51,12 +51,14 @@
       required
     ></v-text-field>
 
-    <v-checkbox
+    <v-checkbox v-model="accepted" light>
       v-model="termsCheckbox"
       :rules="[v => !!v || 'You must agree to continue!']"
-      label="Accept Terms"
-      required
-    ></v-checkbox>
+        <template slot="label">
+         <a @click.stop href="https://everlife.ai/terms.htm" target="_blank"> Accept Terms</a>
+        </template> required
+      </v-checkbox>
+
     <v-layout justify-center>
       <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
     </v-layout>
