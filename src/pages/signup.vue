@@ -59,10 +59,10 @@
         </template> required
       </v-checkbox>
 
-    <v-layout justify-center>
-      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
-    </v-layout>
-    <p v-if="error" class="red--text">{{error}}</p>
+      <v-layout justify-center>
+-      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
+-    </v-layout>
+-    <p v-if="error" class="red--text">{{error}}</p>
     <v-layout justify-center>
       <v-btn
         :disabled="!valid"
@@ -78,7 +78,6 @@
 
 <script>
 import VueRecaptcha from 'vue-recaptcha';
-import birthdatePicker from '../components/birthdatePicker';
 
 export default {
   data: () => ({
@@ -113,15 +112,13 @@ export default {
     passwordConfirm: this.password,
     passConfimEye: true,
     termsCheckbox: false,
-    birthdate: null,
-    gender: 'male',
     reCaptcha: null,
     reCaptchaSiteKey: process.env.CAPTCH_SITE_KEY
   }),
 
   methods: {
     submit() {
-      if (this.$refs.form.validate() && this.birthdate) {
+      if (this.$refs.form.validate()) {
         if(!this.reCaptcha){
           this.error = "Captcha Required";
           return;
@@ -131,8 +128,6 @@ export default {
             name: this.name,
             email: this.email,
             phone:this.phone,
-            birthdate: this.birthdate,
-            gender: this.gender,
             password: this.password,
             reCaptchaResponse: this.reCaptcha,
 
@@ -154,13 +149,16 @@ export default {
   },
 
   components: {
-    birthdatePicker,
     VueRecaptcha
   },
 
   created(){
     if(this.$store.getters.isLoggedIn){
-      this.$router.replace('/dashboard');
+      if(this.$store.getters.idmStatus == null && this.$store.getters.idmStatus != "ACCEPT"){
+        this.$router.replace('/kyc');
+      }else{
+        this.$router.replace('/dashboard');
+      }
     }
   }
 };
