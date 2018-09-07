@@ -12,11 +12,14 @@ export default {
     state.user.kycDocs = user.kycDocs;
     state.user.idmStatus = user.idmStatus;
     state.isDocsAvailable = !!user.kycDocs.document1;
+    state.user.isAdmin = user.isAdmin;
+    state.user.isVerifier = user.isVerifier;
+    state.user.isActive = user.isActive;
   },
 
 /*   outcome/
  * This function will clear the token and it will set it's value to null.
- *  
+ *
  */
 
   clearToken(state) {
