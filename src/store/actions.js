@@ -7,10 +7,18 @@ export default {
     localStorage.setItem('token', response.data.accessToken);
     state.commit('storeToken', response.data.accessToken);
     state.commit('storeUser', response.data.user);
-    router.push({ path: '/dashboard' });
+    if(this.state.user.isVerifier){
+      router.push({ path: '/reviewkyc' });
+    }else{
+      if(this.state.user.idmStatus == null && this.state.user.idmStatus != "ACCEPT"){
+        router.push({ path: '/kyc' });
+      }else{
+        router.push({ path: '/dashboard' });
+      }
+    }
   },
 
-  
+
   /*      problem/
  * We need to have some way of associating a real-world user with our
  * database user.
@@ -19,7 +27,7 @@ export default {
  * We will use the user's email as a unique identifier.
  * setting the token from local storage
  * commmiting storeUser and storeToken for given state
- * once the authentiction is valid 
+ * once the authentiction is valid
  * user will redirect to dashboard
  */
   async login(state, user) {
@@ -27,13 +35,21 @@ export default {
     localStorage.setItem('token', response.data.accessToken);
     state.commit('storeToken', response.data.accessToken);
     state.commit('storeUser', response.data.user);
-    router.push({ path: '/dashboard' });
+    if(this.state.user.isVerifier){
+      router.push({ path: '/reviewkyc' });
+    }else{
+      if(this.state.user.idmStatus == null && this.state.user.idmStatus != "ACCEPT"){
+        router.push({ path: '/kyc' });
+      }else{
+        router.push({ path: '/dashboard' });
+      }
+    }
   },
 
-  
+
    /*      outcome/
-  * This function will update the user profile 
-  * it will commit the state as store user 
+  * This function will update the user profile
+  * it will commit the state as store user
   */
   updateProfile(state) {
     axios.get('api/account/profile').then(({ data }) => {
@@ -43,10 +59,10 @@ export default {
 
   /*      outcome/
   * This function will clear the token from local storage
-  * it will commit the state as clear token 
+  * it will commit the state as clear token
   * it will return to login
   */
-  
+
   clearAuthData(state) {
     localStorage.removeItem('token');
     state.commit('clearToken');
