@@ -18,7 +18,7 @@
                                 v-for="(item, i) in items"
                                 exact flat :ripple="false" dark
                                 > {{item.title}} </v-btn>
-                        
+
                     </v-layout>
                 </v-flex>
             </v-layout>
@@ -79,12 +79,26 @@ export default {
   computed: {
       items() {
           if(this.$store.getters.isLoggedIn){
-            return [
-                { title: "Dashboard", to: "/dashboard" },
-                { title: "KYC", to: "/kyc" },
-                { title: "Contribute", to: "/contribute" },
-                { title: "Logout", to: "/logout" }
-            ]
+            const idmStatus = this.$store.getters.idmStatus;
+            if(this.$store.getters.isVerifier){
+              return [
+                  { title: "Review Kyc", to: "/reviewkyc" },
+                  { title: "Logout", to: "/logout" }
+              ]
+            }else if(idmStatus != "DECLINE" && idmStatus != null){
+              return [
+                  { title: "Dashboard", to: "/dashboard" },
+                  { title: "KYC", to: "/kyc" },
+                  { title: "Contribute", to: "/contribute" },
+                  { title: "Logout", to: "/logout" }
+              ]
+            }else{
+                return [
+                    { title: "Dashboard", to: "/dashboard" },
+                    { title: "KYC", to: "/kyc" },
+                    { title: "Logout", to: "/logout" }
+                ]
+              }
           }
           return [
               { title: "Login", to: "/login" },
@@ -119,7 +133,7 @@ export default {
     width:100%;
     content:'';
     overflow:hidden;
-    z-index: 1; 
+    z-index: 1;
     background-color: #3455ff;
 }
 .overlay-bubble{
