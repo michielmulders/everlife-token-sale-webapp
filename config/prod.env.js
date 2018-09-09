@@ -1,5 +1,5 @@
-'use strict'
-
+'use strict';
+require('dotenv').config();
 const joi = require('joi');
 
 const schema = joi.object({
