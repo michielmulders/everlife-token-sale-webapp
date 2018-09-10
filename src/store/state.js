@@ -11,6 +11,9 @@ export default {
             document2: null
         },
         idmStatus: "",
+        isAdmin:false,
+        isVerifier:false,
+        isActive:false
     },
     ico: {
         startDate: null,

@@ -66,6 +66,7 @@ export default {
         //   this.error = "Captcha Required";
         //   return;
         // }
+
         this.$store
           .dispatch("login", {
             email: this.email,
@@ -86,7 +87,15 @@ export default {
   components: { VueRecaptcha },
   created(){
     if(this.$store.getters.isLoggedIn){
-      this.$router.replace('/dashboard');
+      if(this.$store.getters.isVerifier){
+        this.$router.replace('/reviewkyc');
+      }else{
+        if(this.$store.getters.idmStatus == null && this.$store.getters.idmStatus != "ACCEPT"){
+          this.$router.replace('/kyc');
+        }else{
+          this.$router.replace('/dashboard');
+        }
+      }
     }
   }
 };

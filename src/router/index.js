@@ -7,14 +7,15 @@ import Kyc from '@/pages/kyc'
 import Contribute from '@/pages/contribute'
 import NotFound from '@/components/NotFound'
 import Logout from '@/components/Logout'
+import ReviewKyc from '@/pages/reviewkyc'
 
 import store from '../store';
 Vue.use(Router)
 
 /*      outcome/
- *  Contains /login, /signup, /dashboard and /contribute routes, 
+ *  Contains /login, /signup, /dashboard and /contribute routes,
  *  /dashboard and /contribute is required authentication.
- *  / route redirect to /login route  
+ *  / route redirect to /login route
  */
 
 const router = new Router({
@@ -58,6 +59,11 @@ const router = new Router({
       name: 'kyc',
       component: Kyc
       // meta: { requiresAuth: true }
+    },
+    {
+      path: '/reviewkyc',
+      name: 'reviewkyc',
+      component: ReviewKyc
     },
     { path: '*', name: 'notfound', component: NotFound }
   ]

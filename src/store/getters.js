@@ -26,8 +26,22 @@ export default {
     getKycDocs (state) {
         return state.user.kycDocs;
     },
-    
+
     idmStatus(state) {
         return state.user.idmStatus;
-    } 
+    },
+
+    isAdmin(state) {
+        return state.user.isAdmin;
+    },
+
+    isVerifier(state) {
+      return state.user.isVerifier;
+    },
+
+    isActive(state){
+      return state.user.isActive;
+    }
+
+
 }
