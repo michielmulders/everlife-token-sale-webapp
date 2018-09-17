@@ -100,7 +100,7 @@ export default {
     phone: "",
     phoneRules: [
       v =>
-         /^([0-9]*)$/.test(v) || "Phone Number must be valid"
+         /^(\+[0-9]*)$/.test(v) || "Phone Number must be valid"
     ],
 
     password: "",

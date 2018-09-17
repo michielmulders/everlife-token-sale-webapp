@@ -80,21 +80,29 @@ export default {
       items() {
           if(this.$store.getters.isLoggedIn){
             const idmStatus = this.$store.getters.idmStatus;
+            const kycStatus = this.$store.getters.kycStatus;
+
             if(this.$store.getters.isVerifier){
               return [
                   { title: "Review Kyc", to: "/reviewkyc" },
                   { title: "Logout", to: "/logout" }
               ]
-            }else if(idmStatus != "DECLINE" && idmStatus != null){
+            }else if((idmStatus != null && idmStatus != "DECLINE")
+              && (kycStatus!=null && kycStatus=="ACCEPT")){
               return [
                   { title: "Dashboard", to: "/dashboard" },
                   { title: "KYC", to: "/kyc" },
                   { title: "Contribute", to: "/contribute" },
                   { title: "Logout", to: "/logout" }
               ]
+            }else if(idmStatus != null && idmStatus != "DECLINE"){
+              return [
+                  { title: "Dashboard", to: "/dashboard" },
+                  { title: "KYC", to: "/kyc" },
+                  { title: "Logout", to: "/logout" }
+              ]
             }else{
                 return [
-                    { title: "Dashboard", to: "/dashboard" },
                     { title: "KYC", to: "/kyc" },
                     { title: "Logout", to: "/logout" }
                 ]
