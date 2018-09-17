@@ -15,6 +15,7 @@ export default {
     state.user.isAdmin = user.isAdmin;
     state.user.isVerifier = user.isVerifier;
     state.user.isActive = user.isActive;
+    state.user.kycStatus = user.kycStatus;
   },
 
 /*   outcome/

@@ -13,7 +13,8 @@ export default {
         idmStatus: "",
         isAdmin:false,
         isVerifier:false,
-        isActive:false
+        isActive:false,
+        kycStatus:''
     },
     ico: {
         startDate: null,

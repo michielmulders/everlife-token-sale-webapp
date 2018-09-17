@@ -41,6 +41,10 @@ export default {
 
     isActive(state){
       return state.user.isActive;
+    },
+
+    kycStatus(state){
+      return state.user.kycStatus;
     }
 
 
