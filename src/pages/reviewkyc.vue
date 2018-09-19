@@ -10,11 +10,14 @@
       <td class="text-xs-center">{{ props.item.email}}</td>
       <td class="text-xs-center">{{ props.item.phone}}</td>
       <td class="text-xs-center">{{ props.item.idmStatus}}</td>
-      <td><img :src="props.item.kycDocs.document1" style="width: 50px; height: 50px"></td>
-      <td><img :src="props.item.kycDocs.document2" style="width: 50px; height: 50px"></td>
+      <td><img v-img="{ cursor: 'zoom-in' }" :src="props.item.kycDocs.document1" width="50" height="40" style="margin-top:7px"></td>
+      <td><img v-img="{ cursor: 'zoom-in' }" :src="props.item.kycDocs.document2" width="50" height="40" style="margin-top:7px"></td>
       <td class="justify-center layout px-0">
-        <v-btn small text-xs-center color="blue" @click="acceptItem(props.item)">
+        <v-btn small text-xs-center color="primary" @click="acceptItem(props.item)">
           Accept
+        </v-btn>
+        <v-btn small text-xs-center color="error" @click="rejectItem(props.item)">
+          Reject
         </v-btn>
         </td>
     </template>
@@ -24,6 +27,15 @@
 
 <script>
   import axios from "../axios";
+  import Vue from 'vue';
+  import VueImg from 'v-img';
+
+  Vue.use(VueImg);
+  const vueImgConfig = {
+  // Consider alt of image as its title in gallery?
+  altAsTitle: false,
+}
+Vue.use(VueImg, vueImgConfig)
 
   export default {
     mounted: function () {
@@ -50,8 +62,7 @@
   methods: {
       getData: function () {
         var self = this
-        const url = 'api/kyc/getUsers'
-        axios.get(url, {
+        axios.get('api/kyc/getUsers', {
           dataType: 'json',
           headers: {
             'Accept': 'application/json',
@@ -69,7 +80,33 @@
       },
 
       acceptItem (item) {
-      console.log(this.items.indexOf(item));
+          confirm('Are you sure you want to Accept this Kyc user : '+item.name) &&
+          axios.post('api/kyc/kycStatus', {
+            user_id:item._id, kycStatus:"ACCEPT"
+          })
+        .then(function (response) {
+            console.log(response.data);
+         })
+        .catch(function (error) {
+          console.log(error)
+        })
+        this.getData();
+
+      },
+
+      rejectItem (item) {
+          confirm('Are you sure you want to Reject this Kyc user : '+item.name) &&
+          axios.post('api/kyc/kycStatus', {
+            user_id:item._id, kycStatus:"REJECT"
+          })
+        .then(function (response) {
+            console.log(response.data);
+         })
+        .catch(function (error) {
+          console.log(error)
+        })
+        this.getData();
+
       }
     },
 
