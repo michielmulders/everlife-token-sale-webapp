@@ -10,8 +10,8 @@
       <td class="text-xs-center">{{ props.item.email}}</td>
       <td class="text-xs-center">{{ props.item.phone}}</td>
       <td class="text-xs-center">{{ props.item.idmStatus}}</td>
-      <td><img :src="props.item.kycDocs.document1" style="width: 50px; height: 50px"></td>
-      <td><img :src="props.item.kycDocs.document2" style="width: 50px; height: 50px"></td>
+      <td><img v-img="{ cursor: 'zoom-in' }" :src="props.item.kycDocs.document1" width="50" height="40" style="margin-top:7px"></td>
+      <td><img v-img="{ cursor: 'zoom-in' }" :src="props.item.kycDocs.document2" width="50" height="40" style="margin-top:7px"></td>
       <td class="justify-center layout px-0">
         <v-btn small text-xs-center color="blue" @click="acceptItem(props.item)">
           Accept
@@ -24,6 +24,15 @@
 
 <script>
   import axios from "../axios";
+  import Vue from 'vue';
+  import VueImg from 'v-img';
+
+  Vue.use(VueImg);
+  const vueImgConfig = {
+  // Consider alt of image as its title in gallery?
+  altAsTitle: false,
+}
+Vue.use(VueImg, vueImgConfig)
 
   export default {
     mounted: function () {
