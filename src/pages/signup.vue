@@ -21,7 +21,7 @@
       v-model="phone"
       :rules="phoneRules"
       label="Phone"
-      maxLength="15"
+      maxLength="18"
     ></v-text-field>
 
     <v-text-field
@@ -100,7 +100,7 @@ export default {
     phone: "",
     phoneRules: [
       v =>
-         /^(\+[0-9]*)$/.test(v) || "Phone Number must be valid"
+         /^(\+\d{1,3}[- ]?)?\d{5,15}$/.test(v) || "Phone Number must be valid"
     ],
 
     password: "",
