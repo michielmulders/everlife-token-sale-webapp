@@ -1,46 +1,47 @@
 <template>
-  <v-layout justify-center>
-    <v-stepper v-model="step" class="modal">
-      <v-stepper-header>
-        <v-stepper-step :complete="step > 1" step="1">Your Stellar Account</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step :complete="step > 2" step="2">Select payment Option</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step :complete="step > 3" step="3">Payment</v-stepper-step>
-      </v-stepper-header>
-      <v-stepper-items>
+  <v-layout column>
+    <v-layout justify-center>
+      <v-stepper v-model="step" class="modal">
+        <v-stepper-header>
+          <v-stepper-step :complete="step > 1" step="1">Your Stellar Account</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="step > 2" step="2">Select payment Option</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step :complete="step > 3" step="3">Payment</v-stepper-step>
+        </v-stepper-header>
+        <v-stepper-items>
 
-        <v-stepper-content step="1">
-          <v-card color="grey lighten-4" class="grey--text text--darken-3">
-            <v-card-text>
-              <v-layout column>
-                <div class="headline"> Stellar Account </div>
-                <div> Choose which account in which to receive your EVER by entering your public key.</div>
-                <br/>
-                <v-text-field solo></v-text-field>
-
-                <div><b> This account must:</b></div>
-                <div> 1.Be Active</div>
-                <div> 2.Have a trustline to ........</div>
-
+          <v-stepper-content step="1">
+            <v-card color="grey lighten-4" class="grey--text text--darken-3">
+              <v-card-text>
+                <v-layout column>
+                  <div class="headline">Your Stellar Account</div>
+                  <div>Choose which account in which to receive your EVER, once payment has been recieved, by entering your <b>public</b> account number.</div>
+                  <br/>
+                  <v-text-field solo v-model="destinationAccount"></v-text-field>
+                  <div><b>This account must:</b></div>
+                  <ol>
+                    <li>Be under your control, i.e. you must be able to sign for it to access your EVER once the tokens have been transferred there.</li>
+                    <li>Be active, i.e. have a minimum balance of XLM</li>
+                    <li>Have an existing trust line to the asset EVER issued by GDRCJ5OJTTIL4VUQZ52PCZYAUINEH2CUSP5NC2R6D6WQ47JBLG6DF5TE</li>
+                  </ol>
                   <v-checkbox
                     v-model="secureCheck"
-                    label="I understand that  Iam responsible for entries a corrrect destination account for the purchase of ever."
+                    label="I understand that I'm responsible for entering a correct destination account into which the EVER tokens will be deposited one payment is recieved."
                     hide-details
                   ></v-checkbox>
-                </v-flex>
-              </v-layout>
-            </v-card-text>
-            <v-card-actions>
-              <v-layout justify-end class="mt-4">
-                <v-btn @click="nextStep(2)" :disabled="!hasAcceptedStep1Terms" color="blue darken-2 white--text">Next ></v-btn>
-              </v-layout>
-            </v-card-actions>
-          </v-card>
-        </v-stepper-content>
+                </v-layout>
+              </v-card-text>
+              <v-card-actions>
+                <v-layout justify-end class="mt-4">
+                  <v-btn @click="nextStep(2)" :disabled="!hasAcceptedStep1Terms" color="blue darken-2 white--text">Next ></v-btn>
+                </v-layout>
+              </v-card-actions>
+            </v-card>
+          </v-stepper-content>
 
-        <v-stepper-content step="2">
-          <v-card color="grey lighten-4" class="grey--text text--darken-3">
+          <v-stepper-content step="2">
+            <v-card color="grey lighten-4" class="grey--text text--darken-3">
               <v-card-title primary-title>
                 <div class="headline">Select Payment Option </div>
 
@@ -48,217 +49,166 @@
               <v-card-actions>
                 <v-container>
                   <v-layout column>
+                    <div> Select which currency you want to pay your purchase with.</div>
                     <v-flex xs12 sm6 d-flex>
                       <v-select
-                        :items="items"
-                        :value="selected"
-                        label=""
+                        :items="currencies"
+                        v-model="selectedCurrency"
+                        label="Select currency"
                         solo
                       ></v-select>
                     </v-flex>
-                    <v-form v-show="!selectedXLM">
+                    <v-form v-show="selectedCurrency === 'XLM'">
 
-
-                      <div > Enter account from which payment will be paid </div>
-
+                      <div> Enter the account <b>from</b> which your payment in XLM will be made. </div>
                       <v-text-field
-                            light :solo="true"
-                            v-model="xlmAmount"
-                            label="XLM"
-                            type="number"
-                            required
+                        light :solo="true"
+                        v-model="xlmSourceAccount"
+                        required
                       ></v-text-field>
 
-
+                      <v-checkbox
+                        v-model="secureCheck2"
+                        label="I understand that i have to provide a source correct address for the payment to make it possible to match it against your purchase."
+                        hide-details
+                      ></v-checkbox>
 
                     </v-form>
-
-                    <v-checkbox
-                      v-model="secureCheck2"
-                      label="I understand that i have to provide a correct addres for the payment to be credited to  ms account."
-                      hide-details
-                    ></v-checkbox>
-
-
-
                     <v-layout justify-end class="mt-5">
-                      <v-btn @click="nextStep(3)" :disabled="!hasAcceptedStep2Terms" color="blue darken-2 white--text">Next ></v-btn>
+                      <v-btn @click="nextStep(3)" :disabled="!step2complete" color="blue darken-2 white--text">Next ></v-btn>
                     </v-layout>
                   </v-layout>
                 </v-container>
               </v-card-actions>
-          </v-card>
-        </v-stepper-content>
+            </v-card>
+          </v-stepper-content>
 
-
-        <v-stepper-content step="3">
-          <v-card color="grey lighten-4" class="grey--text text--darken-3">
-            <v-card-text>
-              <v-layout column>
-
-              <div v-show="!selectedXLM">
-                <v-layout >
-                  <v-btn :to="{name: 'dashboard'}" color="blue darken-2 white--text">Pay with coin Payment</v-btn>
+          <v-stepper-content step="3">
+            <v-card color="grey lighten-4" class="grey--text text--darken-3">
+              <v-card-text>
+                <v-layout column>
+                  <v-card-text><vue-markdown v-if="paymentInstruction" :source="paymentInstruction"/></v-card-text>
+                  <div v-show="paymentLink">
+                    <v-layout column>
+                      <v-btn :href="paymentLink" target="_blank" color="blue darken-2 white--text">Pay with CoinPayment</v-btn>
+                      <v-card-text>This will open in a new window.</v-card-text>
+                    </v-layout>
+                  </div>
                 </v-layout>
-              </div>
-              <div class="headline" v-show="selectedXLM"> Pay {{paymentAmount}} XLM to Account to conclude the address</div>
-                <v-alert type="warning">
-                  Please dont refresh or close this page before finishing!
-                </v-alert>
-              </v-layout>
-            </v-card-text>
-            <v-card-actions>
-            <v-layout justify-end class="mt-5">
-              <v-btn :to="{name: 'dashboard'}" color="blue darken-2 white--text">Done</v-btn>
-            </v-layout>
-            </v-card-actions>
-          </v-card>
-        </v-stepper-content>
+              </v-card-text>
+              <v-card-actions>
+                <v-layout justify-end class="mt-5">
+                  <v-btn :to="{name: 'dashboard'}" color="blue darken-2 white--text">Done</v-btn>
+                </v-layout>
+              </v-card-actions>
+            </v-card>
+          </v-stepper-content>
 
-      </v-stepper-items>
-    </v-stepper>
+        </v-stepper-items>
+      </v-stepper>
+    </v-layout>
+
+    <v-layout justify-center v-show="errorMessage">
+      <v-card>
+        <v-card-text class="red--text">{{errorMessage}}</v-card-text>
+      </v-card>
+    </v-layout>
+
   </v-layout>
+
 </template>
 
 
 <script>
-import axios from "../axios";
-import {
-  generateAccount,
-  getAccountBalance,
-  addTrustline,
-  generateIcoTransactions,
-  addDASignerAndUpdateWeight
-} from "../stellar/transaction";
+  import VueMarkdown from 'vue-markdown'
+  import axios from "../axios";
+  import {
+    getAccountBalance
+  } from "../stellar/transaction";
 
-export default {
-  data() {
-    return {
-      done: false,
-      step: 0,
-      xlmAmount: 10000,
-      publicKey: "",
-      secretKey: "",
-      xlmFunded: 0,
-      secureCheck: false,
-      secureCheck2: false,
-      selectedXLM: true,
-      errorOnContribute: "",
-      items: ['BTC', 'ETH', 'XLM']
-    };
-  },
-  mounted() {
-    const account = generateAccount();
-    this.publicKey = account.publicKey;
-    this.secretKey = account.secretKey;
-  },
-
-  methods: {
-    async contribute() {
-      const {
-        transaction1,
-        transaction2,
-        transaction3
-      } = await generateIcoTransactions(
-        (parseInt(this.xlmFunded) - 3).toString(),
-        this.publicKey,
-        this.secretKey
-      );
-      const xdr1 = transaction1
-        .toEnvelope()
-        .toXDR()
-        .toString("base64");
-      const xdr2 = transaction2
-        .toEnvelope()
-        .toXDR()
-        .toString("base64");
-      const xdr3 = transaction3
-        .toEnvelope()
-        .toXDR()
-        .toString("base64");
-      const data = await axios.post("api/account/contribute", {
-        XDR1: xdr1,
-        XDR2: xdr2,
-        XDR3: xdr3,
-        xlmAmount: parseInt(this.xlmFunded) - 3,
-        ca2: this.publicKey
-      });
-      return true;
+  export default {
+    data() {
+      return {
+        done: false,
+        step: 0,
+        amountEver: 10,
+        destinationAccount: null,
+        xlmSourceAccount: null,
+        secureCheck: false,
+        secureCheck2: false,
+        errorOnContribute: "",
+        selectedCurrency : null,
+        currencies: ['BTC', 'ETH', 'XLM'],
+        errorMessage: null,
+        paymentInstruction: null,
+        paymentLink: null
+      };
+    },
+    mounted() {
     },
 
-    nextStep(nextStep) {
-      if (nextStep == 3) {
-        const balanceCheckTimer = setInterval(() => {
-          console.log("Getting balance");
-          getAccountBalance(this.publicKey)
-            .then(result => {
-              const xlmBalance = result.balances.find(balance => {
-                if (balance.asset_type == "native") {
-                  return true;
-                }
-              });
-              this.xlmFunded = xlmBalance.balance;
-              clearInterval(balanceCheckTimer);
-            })
-            .catch(function(error) {
-              console.log("Error while getting account balance");
-            });
-        }, 15000);
-      }
-      if (nextStep == 4) {
-        const result = addTrustline(this.publicKey, this.secretKey).then(
-          result => {
-            addDASignerAndUpdateWeight(this.publicKey, this.secretKey).then(
-              result => {
-            this.contribute()
-              .then(data => {
-                this.done = true;
-              })
-              .catch(error => {
-                console.log(error);
-                this.errorOnContribute =
-                  "Something went wrong, please try again.";
-              });
-              }
-            );
+    methods: {
+      async registerPurchase() {
+        const response = await axios.post("api/account/purchase", {
+          "ever_amount": this.amountEver,
+          "currency": this.selectedCurrency,
+          "issue_to": this.destinationAccount,
+          "source_ref": this.xlmSourceAccount
+        });
+        return response.data;
+      },
+      async nextStep(nextStep) {
+        try {
+          if (nextStep === 2) {
+            //TODO: Check that the destination account is valid and has trustline
+            //getAccountBalance(this.destinationAccount)
           }
-        );
+          if (nextStep === 3) {
+            //TODO: Check that the source account is valid
+            const paymentResponse = await this.registerPurchase();
+            console.log(paymentResponse);
+            this.paymentInstruction = paymentResponse.pay_instruction;
+            this.paymentLink = paymentResponse.payment_link;
+          }
+          this.step = nextStep;
+        } catch (e) {
+          this.errorMessage = e.message;
+        }
       }
-      this.step = nextStep;
+    },
+    computed: {
+      paymentAmount() {
+        return parseInt(this.xlmAmount) + 3;
+      },
+      hasAcceptedStep1Terms() {
+        return this.secureCheck;
+      },
+      step2complete() {
+        if (this.selectedCurrency) {
+          if (this.selectedCurrency === 'XLM') {
+            return this.secureCheck2;
+          } else {
+            return true;
+          }
+        } else {
+          return false;
+        }
+      }
+    },
+    components: {
+      vueMarkdown: VueMarkdown
     }
-  },
-  computed: {
-    funded() {
-      return this.xlmFunded ? true : false;
-    },
-    paymentAmount() {
-      return parseInt(this.xlmAmount) + 3;
-    },
-    hasAcceptedStep1Terms() {
-      return this.secureCheck;
-    },
-    hasAcceptedStep2Terms() {
-      return this.secureCheck2;
-    }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.modal {
-  width: 700px;
-}
+  .modal {
+    width: 700px;
+  }
 
-.accountDetail {
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.termsCheck label {
-  font-size: 10px;
-}
+  .termsCheck label {
+    font-size: 10px;
+  }
 </style>
 
 <style scoped child-component="label">

@@ -1,51 +1,53 @@
 export default {
-    token(state) {
-        return state.token;
-    },
+  token(state) {
+    return state.token;
+  },
 
-    isLoggedIn(state, getters) {
-        return !!getters.token;
-    },
+  isLoggedIn(state) {
+    return !!state.token;
+  },
 
-    user(state) {
-        return state.user;
-    },
+  user(state) {
+    return state.user;
+  },
 
-    everToken(state){
-        return state.everToken;
-    },
+  aggregates(state) {
+    return state.aggregates;
+  },
 
-    isDocsAvailable(state) {
-        return state.isDocsAvailable;
-    },
+  everToken(state){
+    return state.everToken;
+  },
 
-    isDocsUploaded(state) {
-        return state.isDocsUploaded;
-    },
+  isDocsAvailable(state) {
+    return state.isDocsAvailable;
+  },
 
-    getKycDocs (state) {
-        return state.user.kycDocs;
-    },
+  isDocsUploaded(state) {
+    return state.isDocsUploaded;
+  },
 
-    idmStatus(state) {
-        return state.user.idmStatus;
-    },
+  getKycDocs (state) {
+    return state.user.kycDocs;
+  },
 
-    isAdmin(state) {
-        return state.user.isAdmin;
-    },
+  idmStatus(state) {
+    return state.user.idmStatus;
+  },
 
-    isVerifier(state) {
-      return state.user.isVerifier;
-    },
+  isAdmin(state) {
+    return state.user.isAdmin;
+  },
 
-    isActive(state){
-      return state.user.isActive;
-    },
+  isVerifier(state) {
+    return state.user.isVerifier;
+  },
 
-    kycStatus(state){
-      return state.user.kycStatus;
-    }
+  isActive(state){
+    return state.user.isActive;
+  },
 
-
+  kycStatus(state){
+    return state.user.kycStatus;
+  }
 }

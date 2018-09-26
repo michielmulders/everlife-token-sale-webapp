@@ -1,5 +1,5 @@
 <template>
-  
+
     <v-dialog
       v-model="dialog"
       width="500"
@@ -59,8 +59,6 @@
 </template>
 
 <script>
-import {submitXdr} from '../stellar/transaction'
-
 export default {
   props: ['ca2', 'xdr2', 'xdr3'],
   data() {
@@ -73,16 +71,6 @@ export default {
   },
 
   methods: {
-      submitXdr(xdr){
-          this.trxBtnEnabled = false;
-          submitXdr(xdr).then((result)=>{
-              this.successMessage = "Transaction Successful";
-              this.trxBtnEnabled = false;
-          }).catch((error)=> {
-              this.errorMessage = "Failed, you have already done this or else retry after a refresh"
-              this.trxBtnEnabled = false;
-          })
-      }
   }
 };
 </script>
