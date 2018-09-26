@@ -92,7 +92,8 @@ export default {
               return [
                   { title: "Dashboard", to: "/dashboard" },
                   { title: "KYC", to: "/kyc" },
-                  { title: "Contribute", to: "/contribute" },
+                  //{ title: "Contribute", to: "/contribute" },
+                  { title: "Payment", to: "/payment" },
                   { title: "Logout", to: "/logout" }
               ]
             }else if(idmStatus != null && idmStatus != "DECLINE"){
