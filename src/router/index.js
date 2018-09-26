@@ -4,7 +4,6 @@ import Login from '@/pages/login'
 import Signup from '@/pages/signup'
 import Dashboard from '@/pages/dashboard'
 import Kyc from '@/pages/kyc'
-import Contribute from '@/pages/contribute'
 import Payment from '@/pages/payment'
 import NotFound from '@/components/NotFound'
 import Logout from '@/components/Logout'
@@ -50,12 +49,6 @@ const router = new Router({
       meta: { title: "Dashboard" }
     },
     {
-      path: '/contribute',
-      name: 'contribute',
-      component: Contribute,
-      meta: { title: "Contribute" }
-    },
-    {
       path: '/payment',
       name: 'payment',
       component: Payment,
@@ -76,22 +69,21 @@ const router = new Router({
   ]
 })
 
+
+// //TODO: Update with the code suggested by Charles from Trello
 // router.beforeEach((to, from, next) => {
 //   const isLoggedIn = store.getters.isLoggedIn;
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (isLoggedIn) {
-//       next()
-//     } else {
-//       next({ name: 'login', query: { redirect: to.fullPath } })
-//     }
+//   console.log(`[router.index] ${from.path} -> ${to.path} (logged in: ${isLoggedIn})`);
+//   if (!isLoggedIn && to.path !== "/login" && to.path !== "/signup") {
+//     next('/login')
 //   } else {
-//     next()
+//     next();
 //   }
-// })
+// });
 
 router.beforeEach((to, from, next) => {
   document.title = "Everlife.AI Token Sale - " + to.meta.title
   next()
-})
+});
 
 export default router

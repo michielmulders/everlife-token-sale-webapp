@@ -1,77 +1,59 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="payments"
+    :items="paymentsArray"
     hide-actions
     class="elevation-1"
   >
     <template slot="items" slot-scope="props">
       <td class="text-xs-center">{{ props.item.time | formatDate}}</td>
-      <td class="text-xs-center">{{ props.item.xlmAmount }} XLM</td>
-      <td class="text-xs-center">{{ props.item.everBalance }}</td>
-      <td class="text-xs-center">{{ props.item.bonus }}</td>
-      <td class="text-xs-center">{{ props.item.total }}</td>
-      <td class="text-xs-center"><manage-account :ca2="props.item.ca2" :xdr2="props.item.xdr2" :xdr3="props.item.xdr3"></manage-account></td>
+      <td class="text-xs-center">{{ props.item.ever }} EVER</td>
+      <td class="text-xs-center">{{ props.item.amount }} {{ props.item.currency }}</td>
+      <td class="text-xs-center">{{ props.item.status }}</td>
+      <td class="text-xs-center">0 EVER</td>
+      <td class="text-xs-center">0 EVER</td>
+      <!--<td class="text-xs-center"><manage-account :ca2="props.item.ca2" :xdr2="props.item.xdr2" :xdr3="props.item.xdr3"></manage-account></td>-->
     </template>
   </v-data-table>
 </template>
 
 <script>
-import { getAccountBalance, submitXdr } from "../stellar/transaction";
+import { getAccountBalance } from "../stellar/transaction";
 import ManageAccount from "../components/manageAccount";
 
 export default {
-  props: ["contributions"],
+  props: ["payments"],
   data() {
     return {
       headers: [
-        { text: "Time", align: "center", sortable: false, value: 'time' },
-        { text: "Amount Paid", align: "center", sortable: false, value: 'xlmAmount' },
-        { text: "Purchased Tokens", align: "center", sortable: false, value: 'everBalance' },
-        { text: "Bonus Tokens", align: "center", sortable: false, value: 'bonus' },
-        { text: "Total Tokens", align: "center", sortable: false, value: 'total' },
-        { text: "Actions", align: "center", sortable: false},
+        { text: "Time", align: "center", sortable: false },
+        { text: "Purchased Tokens", align: "center", sortable: false },
+        { text: "Token Cost", align: "center", sortable: false },
+        { text: "Status", align: "center", sortable: false },
+        { text: "Issued Tokens", align: "center", sortable: false },
+        { text: "Issued Bonus", align: "center", sortable: false },
+        // { text: "Actions", align: "center", sortable: false},
       ]
     };
   },
   asyncComputed: {
-    payments: {
-      async get(){
-        const paymentsArray = await Promise.all(this.contributions.map(async (payment, index, array) => {
-          const entry = {
-            value: false,
-            time: payment.createdAt,
-            xlmAmount: payment.xlmAmount,
-            everBalance: await this.everBalance(payment.ca2),
-            bonus: 0,
-            total: this.everBalance, // will be + bonus later
-            ca2: payment.ca2,
-            xdr2: payment.xdr2,
-            xdr3: payment.xdr3,
-          };
-          entry.total = entry.everBalance;
-          return entry;
-        }));
-        return paymentsArray;
+    paymentsArray: {
+      get() {
+        return this.payments.map((p) => {
+          return {
+            time: p.createdAt,
+            amount: p.amount_expected,
+            currency: p.currency,
+            ever: p.ever_expected,
+            status: p.status };
+        });
       },
-      default(){
+      default() {
         return []
       }
     }
   },
   methods: {
-    async everBalance(ca2){
-      if (!ca2) {
-        return 0;
-      }
-      const result = await getAccountBalance(ca2);
-      const everBalance = result.balances.find(balance => {
-        if (balance.asset_code == "EVER") {
-          return true;
-        }
-      });
-      return everBalance.balance;
-    }
   },
 
   components: {
