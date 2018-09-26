@@ -5,6 +5,7 @@ import Signup from '@/pages/signup'
 import Dashboard from '@/pages/dashboard'
 import Kyc from '@/pages/kyc'
 import Contribute from '@/pages/contribute'
+import Payment from '@/pages/payment'
 import NotFound from '@/components/NotFound'
 import Logout from '@/components/Logout'
 import ReviewKyc from '@/pages/reviewkyc'
@@ -53,6 +54,12 @@ const router = new Router({
       name: 'contribute',
       component: Contribute,
       meta: { title: "Contribute" }
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: Payment,
+      meta: { title: "Payment" }
     },
     {
       path: '/kyc',
