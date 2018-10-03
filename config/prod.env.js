@@ -6,7 +6,8 @@ const schema = joi.object({
   CAPTCH_SITE_KEY:  joi.string().required(),
   STELLAR_ENV:      joi.string().required(),
   IDM_PLUGIN_JS:    joi.string().required(),
-  IDM_PLUGIN_TOKEN: joi.string().required()
+  IDM_PLUGIN_TOKEN: joi.string().required(),
+  MAILGUN_SENDER_FROM: joi.string().required()
 })
   .unknown()
   .required();
@@ -21,5 +22,6 @@ module.exports = {
   CAPTCH_SITE_KEY:  JSON.stringify(envVars.CAPTCH_SITE_KEY),
   STELLAR_ENV:      JSON.stringify(envVars.STELLAR_ENV),
   IDM_PLUGIN_JS:    JSON.stringify(envVars.IDM_PLUGIN_JS),
-  IDM_PLUGIN_TOKEN: JSON.stringify(envVars.IDM_PLUGIN_TOKEN)
+  IDM_PLUGIN_TOKEN: JSON.stringify(envVars.IDM_PLUGIN_TOKEN),
+  MAILGUN_SENDER_FROM: JSON.stringify(envVars.MAILGUN_SENDER_FROM)
 };
