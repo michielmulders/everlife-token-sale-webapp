@@ -90,8 +90,11 @@ Vue.use(VueImg, vueImgConfig)
         .catch(function (error) {
           console.log(error)
         })
-        this.getData();
 
+        //Send email to Kyc User
+
+        this.getData();
+        this.sendMailItem(item);
       },
 
       rejectItem (item) {
@@ -106,10 +109,35 @@ Vue.use(VueImg, vueImgConfig)
           console.log(error)
         })
         this.getData();
+      },
+
+      sendMailItem (item) {
+          console.log('Sending mail to user : '+item.email);
+          var messageItem = {
+            from: process.env.MAILGUN_SENDER_FROM,
+            subject: "Kyc Approved from EverlifeAI",
+            assetname:"assets/kycApprovedTemplate.pug",
+          };
+
+          var recipientItem = {
+            email: item.email,
+            name: item.name,
+          };
+
+          axios.post('api/communicate/mail', {
+            recipient:recipientItem, message:messageItem
+          })
+        .then(function (response) {
+            console.log(response.data);
+         })
+        .catch(function (error) {
+          console.log(error)
+        })
 
       }
+
+
+
     },
-
-
   }
 </script>
