@@ -113,11 +113,19 @@ Vue.use(VueImg, vueImgConfig)
 
       sendMailItem (item) {
           console.log('Sending mail to user : '+item.email);
-          var itemMessage = { from: process.env.MAILGUN_SENDER_FROM, subject: "Kyc Approved from EverlifeAI", text: "Doe", html:'',
-
+          var messageItem = {
+            from: process.env.MAILGUN_SENDER_FROM,
+            subject: "Kyc Approved from EverlifeAI",
+            assetname:"assets/kycApprovedTemplate.pug",
           };
+
+          var recipientItem = {
+            email: item.email,
+            name: item.name,
+          };
+
           axios.post('api/communicate/mail', {
-            recipient:item.email, message:itemMessage
+            recipient:recipientItem, message:messageItem
           })
         .then(function (response) {
             console.log(response.data);
