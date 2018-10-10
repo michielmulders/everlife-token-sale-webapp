@@ -27,7 +27,7 @@
                   </ol>
                   <v-checkbox
                     v-model="secureCheck"
-                    label="I understand that I'm responsible for entering a correct destination account into which the EVER tokens will be deposited one payment is recieved."
+                    label="I understand that I'm responsible for entering a correct destination account into which the EVER tokens will be deposited once payment is received."
                     hide-details
                   ></v-checkbox>
                 </v-layout>
@@ -69,7 +69,7 @@
 
                       <v-checkbox
                         v-model="secureCheck2"
-                        label="I understand that i have to provide a source correct address for the payment to make it possible to match it against your purchase."
+                        label="I understand that i have to provide a source correct address for the payment to make it possible to match it against this purchase."
                         hide-details
                       ></v-checkbox>
 

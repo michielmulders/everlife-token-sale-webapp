@@ -10,8 +10,8 @@
       <td class="text-xs-center">{{ props.item.ever }} EVER</td>
       <td class="text-xs-center">{{ props.item.amount }} {{ props.item.currency }}</td>
       <td class="text-xs-center">{{ props.item.status }}</td>
-      <td class="text-xs-center">0 EVER</td>
-      <td class="text-xs-center">0 EVER</td>
+      <td class="text-xs-center">{{ props.item.ever_amount }} EVER</td>
+      <td class="text-xs-center">{{ props.item.ever_bonus }} EVER</td>
       <!--<td class="text-xs-center"><manage-account :ca2="props.item.ca2" :xdr2="props.item.xdr2" :xdr3="props.item.xdr3"></manage-account></td>-->
     </template>
   </v-data-table>
@@ -31,7 +31,7 @@ export default {
         { text: "Token Cost", align: "center", sortable: false },
         { text: "Status", align: "center", sortable: false },
         { text: "Issued Tokens", align: "center", sortable: false },
-        { text: "Issued Bonus", align: "center", sortable: false },
+        { text: "Credited Bonus", align: "center", sortable: false },
         // { text: "Actions", align: "center", sortable: false},
       ]
     };
@@ -45,7 +45,10 @@ export default {
             amount: p.amount_expected,
             currency: p.currency,
             ever: p.ever_expected,
-            status: p.status };
+            status: p.status,
+            ever_amount: p.ever_amount,
+            ever_bonus: p.ever_bonus
+          };
         });
       },
       default() {
