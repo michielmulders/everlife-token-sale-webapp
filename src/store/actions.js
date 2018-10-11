@@ -54,6 +54,7 @@ export default {
   updateProfile(state) {
     axios.get('api/account/profile').then(({ data }) => {
       state.commit('storeUser', data.user);
+      state.commit('storeAggregates', data.aggregates);
     })
   },
 
