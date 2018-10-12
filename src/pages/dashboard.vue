@@ -1,7 +1,13 @@
 <template>
+
   <v-layout column>
+
+    <v-alert v-show="kycAlert" type="error" style="width:100%">
+        Your KYC is Pending. <router-link :to="{ name: 'kyc'}"  class="text-color:white">Click Here</router-link> to do KYC
+    </v-alert>
+
     <v-layout v-bind="binding" wrap class="details-section">
-      <v-flex class="pa-2">
+      <v-flex xs12 sm4 class="pa-2">
         <v-card>
           <v-card-title><h4>Purchased Tokens</h4></v-card-title>
           <v-divider></v-divider>
@@ -14,7 +20,7 @@
           </v-list>
         </v-card>
       </v-flex>
-      <v-flex class="pa-2">
+      <v-flex xs12 sm4 class="pa-2">
         <v-card>
           <v-card-title><h4>Bonus Tokens</h4></v-card-title>
           <v-divider></v-divider>
@@ -27,7 +33,7 @@
           </v-list>
         </v-card>
       </v-flex>
-      <v-flex class="pa-2">
+      <v-flex xs12 sm4 class="pa-2">
         <v-card>
           <v-card-title><h4>Total Tokens</h4></v-card-title>
           <v-divider></v-divider>
@@ -40,23 +46,101 @@
           </v-list>
         </v-card>
       </v-flex>
-
     </v-layout>
-    <v-layout>
-        <v-flex class="pa-2">
-        <v-card height="500px" >
-          <v-card-title><h4>How it Works</h4></v-card-title>
-          <v-divider></v-divider>
 
-           <table cellpadding="5"><tr><td style="padding: 10px;">Each token is equivalent to 0.1 USD with estimated crypto conversion listed next to each purchase amount. <BR/> <BR/>Please watch the video to understand how the purchase process works. <BR/>All purchases are subject to a 14 day freeze period. <BR/><BR/> <h3><A href="/payment">Purchase EVER</a></h3></td><td style="padding: 10px;"> <iframe width="560" height="315" src="https://www.youtube.com/embed/A2DrqxT5M2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></td></tr>
+    <v-layout justify-center style="height:320px">
+        <v-flex xs12 sm8 class="pa-2" style="height:320px">
+        <v-card >
+           <table>
+           </tr>
+              <tr>
+                <td  class="pa-4">
+                  <div  class="title">How it Works</div>
+                  <div class="pt-4">Each token is equivalent to 0.1 USD with estimated crypto conversion listed next to each purchase amount. <BR/> <BR/></div>
+                  Please watch the video to understand how the purchase process works. <BR/>
+                  All purchases are subject to a 14 day freeze period. <BR/><BR/>
+                  <v-btn  color="secondary">FAQ / Learn More</v-btn>
+                </td>
+                <td  class="pa-2"> <iframe width="250" height="200" src="https://www.youtube.com/embed/A2DrqxT5M2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></td>
+              </tr>
              </table>
 
         </v-card>
       </v-flex>
+      <v-flex xs12 sm4 class="pa-2">
+        <v-card>
+              <v-container  fluid>
+                <v-layout fill-height>
+                  <v-flex xs12 align-end flexbox>
+                    <div class="subheading">Purchase a custom amount of EVER</div>
+                    <div style="padding-top:20px" class="display-1 text-xs-center font-weight-bold">{{ slider }}</div>
+                    <div style="padding-top:0px" class="subheading text-xs-center">EVER</div>
 
+                    <div>
+                      <v-flex class="pr-3">
+                        <v-slider
+                          v-model="slider"
+                          :max="max"
+                          :min="min"
+                        ></v-slider>
+                      </v-flex>
+                    </div>
+                    <div>
+                    <v-flex>
+                      <v-btn block color="info" :to="{ name: 'payment', params: { amountEver: slider }}">Buy Now</v-btn>
+                    </v-flex>
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+
+
+
+            <v-card-actions>
+            </v-card-actions>
+          </v-card>
+      </v-flex>
     </v-layout>
+
+
+    <v-layout justify-center class="mt-3">
+      <v-flex xs12 sm12>
+        <v-card>
+          <v-container fluid grid-list-lg>
+            <v-layout row wrap>
+              <v-flex
+                v-for="card in cards"
+                v-bind="{ [`xs${card.flex}`]: true }"
+                :key="card.title"
+              >
+                <v-card>
+                  <v-container>
+                      <v-img :src="card.src"  outline height="130px"></v-img>
+                      <v-container fill-height fluid pa-2 text-xs-center>
+                        <v-layout fill-height>
+                          <v-flex xs12 align-end flexbox>
+                            <span class="subheading font-weight-medium " v-text="card.ever">Ever</span>
+                            <span class="subheading "> EVER</span>
+                          </v-flex>
+                        </v-layout>
+                      </v-container>
+
+                    <template>
+                      <v-btn block color="info" dark :to="{ name: 'payment', params: { amountEver: card.ever }}">Buy Now</v-btn>
+                    </template>
+
+                </v-container>
+                </v-card>
+
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card>
+      </v-flex>
+    </v-layout>
+
     <v-layout>
-      <payment-table class="mt-5 table" :payments="user.payments"></payment-table>
+      <payment-table class="mt-3 table" :payments="user.payments"></payment-table>
     </v-layout>
   </v-layout>
 </template>
@@ -67,10 +151,35 @@ import PaymentTable from "../components/PaymentTable.vue";
 
 export default {
   data() {
-    return {};
+    return {
+    min: 0,
+        max: 10000000,
+        slider: 10000,
+        range: [0, 10000000],
+      cards: [
+        { src: 'https://everlife.ai/images/coin/ever-coin-1.png', flex: 3, ever:'250' },
+        { src: 'https://everlife.ai/images/coin/ever-coin-2.png', flex: 3, ever:'1,000'  },
+        { src: 'https://everlife.ai/images/coin/ever-coin-3.png', flex: 3, ever:'2,500'  },
+        { src: 'https://everlife.ai/images/coin/ever-coin-4.png', flex: 3, ever:'5,000'  },
+        { src: 'https://everlife.ai/images/coin/ever-coin-5.png', flex: 3, ever:'10,000'  },
+        { src: 'https://everlife.ai/images/coin/ever-coin-6.png', flex: 3, ever:'25,000'  },
+        { src: 'https://everlife.ai/images/coin/ever-coin-7.png', flex: 3, ever:'100,000'  },
+        { src: 'https://everlife.ai/images/coin/ever-coin-8.png', flex: 3, ever:'500,000'  },
+
+
+      ]
+    }
   },
   computed: {
     ...mapGetters(["user","aggregates"]),
+
+    kycAlert: function () {
+      if (this.user.kycStatus=="ACCEPT") {
+        return false;
+      } else {
+        return true;
+      }
+    },
     binding() {
       const binding = {};
       if (this.$vuetify.breakpoint.mdAndUp) binding.row = true;

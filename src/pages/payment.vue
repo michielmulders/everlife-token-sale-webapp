@@ -10,11 +10,13 @@
           <v-stepper-step :complete="step > 3" step="3">Payment</v-stepper-step>
         </v-stepper-header>
         <v-stepper-items>
-
           <v-stepper-content step="1">
             <v-card color="grey lighten-4" class="grey--text text--darken-3">
               <v-card-text>
                 <v-layout column>
+                  <div class="headline font-weight-bold">Purchase Amount :  {{ amountEver }} EVER</div>
+                  <v-divider></v-divider>
+                  <br/>
                   <div class="headline">Your Stellar Account</div>
                   <div>Choose which account in which to receive your EVER, once payment has been recieved, by entering your <b>public</b> account number.</div>
                   <br/>
@@ -24,6 +26,7 @@
                     <li>Be under your control, i.e. you must be able to sign for it to access your EVER once the tokens have been transferred there.</li>
                     <li>Be active, i.e. have a minimum balance of XLM</li>
                     <li>Have an existing trust line to the asset EVER issued by GDRCJ5OJTTIL4VUQZ52PCZYAUINEH2CUSP5NC2R6D6WQ47JBLG6DF5TE</li>
+                    <li>Follow Document <a href="https://medium.com/everlife-ai/how-to-accept-and-hold-ever-tokens-c249fa2dac70" target="_blank">click Here</a></li>
                   </ol>
                   <v-checkbox
                     v-model="secureCheck"
@@ -144,6 +147,13 @@
         paymentLink: null
       };
     },
+    created() {
+        this.amountEver = this.$route.params.amountEver;
+        if(this.$route.query.debug) {
+            this.debug = this.$route.query.debug;
+        }
+    },
+
     mounted() {
     },
 
