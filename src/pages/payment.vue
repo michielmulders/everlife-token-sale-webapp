@@ -134,7 +134,7 @@
       return {
         done: false,
         step: 0,
-        amountEver: 10,
+        amountEver: 0,
         destinationAccount: null,
         xlmSourceAccount: null,
         secureCheck: false,
@@ -159,8 +159,9 @@
 
     methods: {
       async registerPurchase() {
+        const everAsNumber = this.amountEver.replace(/[,\s]/g, '');
         const response = await axios.post("api/account/purchase", {
-          "ever_amount": this.amountEver,
+          "ever_amount": everAsNumber,
           "currency": this.selectedCurrency,
           "issue_to": this.destinationAccount,
           "source_ref": this.xlmSourceAccount
