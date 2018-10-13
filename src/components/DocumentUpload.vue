@@ -149,7 +149,7 @@ export default {
     },
     isIDMAccepted() {
       const idmStatus = this.$store.getters.idmStatus;
-      return (idmStatus != "DECLINE" && idmStatus != null);
+      return idmStatus != '';
     },
     isDocsUploaded() {
       return this.$store.getters.isDocsUploaded;
