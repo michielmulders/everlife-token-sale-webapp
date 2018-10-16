@@ -4,7 +4,12 @@
         <v-container class="my-3">
             <v-layout row align-content-space-between>
                 <v-flex>
-                    <a href="/"><img alt="logo" src="/static/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></a>
+                <div v-if="isAdmin">
+                  <router-link  :to="{ name: 'dashboard'}"><img alt="logo" src="/static/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></router-link>
+                  </div>
+                  <div v-else>
+                    <router-link  :to="{ name: 'reviewkyc'}"><img alt="logo" src="/static/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></router-link>
+                  </div>
                 </v-flex>
                 <v-flex>
                     <v-layout justify-end hidden-md-and-up>
@@ -77,6 +82,9 @@ export default {
     };
   },
   computed: {
+      isAdmin: function () {
+        return !this.$store.getters.isVerifier;
+      },
       items() {
           if(this.$store.getters.isLoggedIn){
             const idmStatus = this.$store.getters.idmStatus;
