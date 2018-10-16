@@ -2,8 +2,9 @@
 
   <v-layout column>
 
-    <v-alert v-show="kycAlert" type="error" style="width:100%">
-        Your KYC is Pending. <router-link :to="{ name: 'kyc'}"  class="text-color:white">Click Here</router-link> to do KYC
+    <v-alert v-show="alert.show" :color="alert.color" style="width:100%">
+        <span>{{alert.text}}</span>
+        <span v-show="alert.rshow"><router-link  :to="{ name: 'kyc'}"  class="text-color:white">Click Here</router-link> to do KYC</span>
     </v-alert>
 
     <v-layout v-bind="binding" wrap class="details-section">
@@ -87,7 +88,9 @@
                     </div>
                     <div>
                     <v-flex>
-                      <v-btn block color="info" :to="{ name: 'payment', params: { amountEver: slider }}">Buy Now</v-btn>
+                      <v-btn block color="info" v-show="alert.enablePurchaseBtn" :to="{ name: 'payment', params: { amountEver: slider }}">Buy Now</v-btn>
+                      <v-btn block  disabled v-show="!alert.enablePurchaseBtn">Disabled</v-btn>
+
                     </v-flex>
                     </div>
                   </v-flex>
@@ -126,9 +129,13 @@
                       </v-container>
 
                     <template>
-                      <v-btn block color="info" dark :to="{ name: 'payment', params: { amountEver: card.ever }}">Buy Now</v-btn>
-                    </template>
 
+
+                    </template>
+                    <div>
+                        <v-btn block color="info" dark v-show="alert.enablePurchaseBtn" :to="{ name: 'payment', params: { amountEver: card.ever }}">Buy Now</v-btn>
+                        <v-btn block  disabled v-show="!alert.enablePurchaseBtn">Disabled</v-btn>
+                    </div>
                 </v-container>
                 </v-card>
 
@@ -173,12 +180,17 @@ export default {
   computed: {
     ...mapGetters(["user","aggregates"]),
 
-    kycAlert: function () {
+    alert: function () {
       if (this.user.kycStatus=="ACCEPT") {
-        return false;
-      } else {
-        return true;
+        return {show:false, enablePurchaseBtn:true};
+      }else if(this.user.kycStatus=="REJECT"){
+        return {show:true,  rshow:true, enablePurchaseBtn:false, color:"error", text:"We regret to inform you that your KYC application was rejected."};
+      }else if(this.user.kycStatus=="PENDING"){
+        return {show:true, rshow:false, enablePurchaseBtn:false, color:"warning", text:"Waiting for KYC approval, a notification e-mail will be sent once verification is complete."};
+      }else{
+        return {show:true, rshow:true, enablePurchaseBtn:false, color:"error", text:"Your KYC is Pending."};
       }
+
     },
     binding() {
       const binding = {};
