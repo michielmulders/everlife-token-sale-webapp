@@ -7,6 +7,7 @@
       v-model="email"
       :rules="emailRules"
       label="E-mail"
+      @keyup.enter="submit"
       required
     ></v-text-field>
 
@@ -20,6 +21,7 @@
       hint="At least 8 characters"
       :rules="passwordRules"
       counter
+      @keyup.enter="submit"
       required
     ></v-text-field>
     <!-- <v-layout justify-center>
