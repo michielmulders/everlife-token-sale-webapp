@@ -1,68 +1,60 @@
 <template>
 
   <v-layout column>
+    <v-layout v-bind="binding" wrap class="details-section" v-show="aggregates.ever_amount>0">
 
-    <v-alert v-show="alert.show" :color="alert.color" style="width:100%">
-        <span>{{alert.text}}</span>
-        <span v-show="alert.rshow"><router-link  :to="{ name: 'kyc'}"  class="text-color:white">Click Here</router-link> to do KYC</span>
-    </v-alert>
-
-    <v-layout v-bind="binding" wrap class="details-section">
       <v-flex xs12 sm4 class="pa-2">
-        <v-card>
-          <v-card-title><h4>Purchased Tokens</h4></v-card-title>
-          <v-divider></v-divider>
-          <v-list class="text--darken-3 grey--text">
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">{{ aggregates.ever_amount }} EVER</v-list-tile-content>
-            </v-list-tile>
+          <v-card class="rounded-card">
+            <v-card-title class="font-weight-bold text--darken-2 grey--text">Purchased Tokens</v-card-title>
+            <v-divider ></v-divider>
+            <v-list dense>
+              <v-list-tile>
+                <v-list-tile-content class="subheading font-weight-bold text--darken-2 grey--text">{{ aggregates.ever_amount }} EVER</v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+         </v-card>
+      </v-flex>
 
-
-          </v-list>
+      <v-flex xs12 sm4 class="pa-2">
+        <v-card class="rounded-card">
+          <v-card-title class="font-weight-bold text--darken-2 grey--text">Bonus Tokens</v-card-title>
+              <v-divider ></v-divider>
+              <v-list dense>
+                <v-list-tile>
+                  <v-list-tile-content class="subheading font-weight-bold text--darken-2 grey--text">{{ aggregates.ever_bonus }} EVER</v-list-tile-content>
+                </v-list-tile>
+            </v-list>
         </v-card>
       </v-flex>
+
       <v-flex xs12 sm4 class="pa-2">
-        <v-card>
-          <v-card-title><h4>Bonus Tokens</h4></v-card-title>
-          <v-divider></v-divider>
-          <v-list class="text--darken-3 grey--text">
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">{{ aggregates.ever_bonus }} EVER</v-list-tile-content>
-            </v-list-tile>
+        <v-card class="rounded-card">
+          <v-card-title class="font-weight-bold text--darken-2 grey--text">Total Tokens</v-card-title>
+            <v-divider ></v-divider>
+            <v-list dense>
+              <v-list-tile>
+                <v-list-tile-content class="subheading font-weight-bold text--darken-2 grey--text">{{ aggregates.ever_total }} EVER</v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+         </v-card>
 
-
-          </v-list>
-        </v-card>
-      </v-flex>
-      <v-flex xs12 sm4 class="pa-2">
-        <v-card>
-          <v-card-title><h4>Total Tokens</h4></v-card-title>
-          <v-divider></v-divider>
-          <v-list class="text--darken-3 grey--text">
-            <v-list-tile>
-              <v-list-tile-content class="font-weight-bold text--darken-2 grey--text">{{ aggregates.ever_total }} EVER</v-list-tile-content>
-            </v-list-tile>
-
-
-          </v-list>
-        </v-card>
       </v-flex>
     </v-layout>
 
-    <v-layout justify-center style="height:320px">
-        <v-flex xs12 sm8 class="pa-2" style="height:320px">
+    <v-layout v-bind="binding" wrap class="details-section">
+        <v-flex xs12 md8  class="pa-2">
         <v-card >
            <table>
            </tr>
               <tr>
                 <td  class="pa-4">
                   <div  class="title">How it Works</div>
-                  <div class="pt-4">Each token is equivalent to 0.1 USD with estimated crypto conversion listed next to each purchase amount. <BR/> <BR/></div>
-                  Please watch the video to understand how the purchase process works. <BR/>
-                  All purchases are subject to a 14 day freeze period. <BR/><BR/>
-                  <v-btn  color="secondary">FAQ / Learn More</v-btn>
+                  <div class="pt-4">EVER is equal to 0.1 USD. You will be able to purchase EVER once your KYC is approved. View the video to understand the purchase process. <BR/> <BR/></div>
+                  Move Slider to select how much EVER you are looking to purchase. <BR/>
+                  <!--<v-btn  color="secondary">FAQ / Learn More</v-btn>-->
+                  <br/>
                 </td>
-                <td  class="pa-2"> <iframe width="250" height="200" src="https://www.youtube.com/embed/A2DrqxT5M2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></td>
+                <td  class="pa-2"> <br/><iframe width="250" height="170" src="https://www.youtube.com/embed/A2DrqxT5M2c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></td>
               </tr>
              </table>
 
@@ -70,15 +62,13 @@
       </v-flex>
       <v-flex xs12 sm4 class="pa-2">
         <v-card>
-              <v-container  fluid>
+              <div class="pa-4">
                 <v-layout fill-height>
-                  <v-flex xs12 align-end flexbox>
+                  <v-flex xs12 align-end >
                     <div class="subheading">Purchase a custom amount of EVER</div>
-                    <div style="padding-top:20px" class="display-1 text-xs-center font-weight-bold">{{ slider }}</div>
-                    <div style="padding-top:0px" class="subheading text-xs-center">EVER</div>
-
-                    <div>
-                      <v-flex class="pr-3">
+                    <div class="pt-2 title text-xs-center font-weight-bold">{{ slider }} <span class="body-1 text-xs-center">EVER</span></div>
+                    <div >
+                      <v-flex class="px-5">
                         <v-slider
                           v-model="slider"
                           :max="max"
@@ -87,39 +77,37 @@
                       </v-flex>
                     </div>
                     <div>
-                    <v-flex>
-                      <v-btn block color="info" v-show="alert.enablePurchaseBtn" :to="{ name: 'payment', params: { amountEver: slider }}">Buy Now</v-btn>
-                      <v-btn block  disabled v-show="!alert.enablePurchaseBtn">Disabled</v-btn>
-
-                    </v-flex>
+                      <div class="px-5">
+                        <v-btn block color="info" v-show="enablePurchase.enablePurchaseBtn" :to="{ name: 'payment', params: { amountEver: slider }}">Buy Now</v-btn>
+                        <v-btn block  disabled v-show="!enablePurchase.enablePurchaseBtn">Buy Now</v-btn>
+                      </div>
                     </div>
                   </v-flex>
                 </v-layout>
-              </v-container>
-
-
-
-            <v-card-actions>
-            </v-card-actions>
+              </div>
           </v-card>
       </v-flex>
     </v-layout>
 
 
-    <v-layout justify-center class="mt-3">
-      <v-flex xs12 sm12>
+    <v-layout v-bind="binding" wrap class="details-section">
+      <v-flex xs12 sm12 class="pa-2">
         <v-card>
           <v-container fluid grid-list-lg>
             <v-layout row wrap>
               <v-flex
+              xs6
+              sm6
+              md3
+
                 v-for="card in cards"
                 v-bind="{ [`xs${card.flex}`]: true }"
                 :key="card.title"
               >
                 <v-card>
                   <v-container>
-                      <v-img :src="card.src"  outline height="130px"></v-img>
-                      <v-container fill-height fluid pa-2 text-xs-center>
+                      <v-img :src="card.src"  outline height="100px"></v-img>
+                      <v-container fill-height fluid pa-3 text-xs-center>
                         <v-layout fill-height>
                           <v-flex xs12 align-end flexbox>
                             <span class="subheading font-weight-medium " v-text="card.ever">Ever</span>
@@ -128,13 +116,9 @@
                         </v-layout>
                       </v-container>
 
-                    <template>
-
-
-                    </template>
-                    <div>
-                        <v-btn block color="info" dark v-show="alert.enablePurchaseBtn" :to="{ name: 'payment', params: { amountEver: card.ever }}">Buy Now</v-btn>
-                        <v-btn block  disabled v-show="!alert.enablePurchaseBtn">Disabled</v-btn>
+                    <div class="px-3">
+                        <v-btn btn-xs block color="info" dark v-show="enablePurchase.enablePurchaseBtn" :to="{ name: 'payment', params: { amountEver: card.ever }}">Buy Now</v-btn>
+                        <v-btn block  disabled v-show="!enablePurchase.enablePurchaseBtn">Buy Now</v-btn>
                     </div>
                 </v-container>
                 </v-card>
@@ -146,8 +130,10 @@
       </v-flex>
     </v-layout>
 
-    <v-layout>
-      <payment-table class="mt-3 table" :payments="user.payments"></payment-table>
+    <v-layout v-show="aggregates.ever_amount>0">
+      <v-flex class="pa-2">
+        <payment-table class="table" :payments="user.payments"></payment-table>
+      </v-flex>
     </v-layout>
   </v-layout>
 </template>
@@ -180,15 +166,11 @@ export default {
   computed: {
     ...mapGetters(["user","aggregates"]),
 
-    alert: function () {
+    enablePurchase: function () {
       if (this.user.kycStatus=="ACCEPT") {
-        return {show:false, enablePurchaseBtn:true};
-      }else if(this.user.kycStatus=="REJECT"){
-        return {show:true,  rshow:true, enablePurchaseBtn:false, color:"error", text:"We regret to inform you that your KYC application was rejected."};
-      }else if(this.user.kycStatus=="PENDING"){
-        return {show:true, rshow:false, enablePurchaseBtn:false, color:"warning", text:"Waiting for KYC approval, a notification e-mail will be sent once verification is complete."};
+        return { enablePurchaseBtn:true};
       }else{
-        return {show:true, rshow:true, enablePurchaseBtn:false, color:"error", text:"Your KYC is Pending."};
+        return {enablePurchaseBtn:false};
       }
 
     },
@@ -242,4 +224,12 @@ export default {
 .details-section {
   font-family: "PT Sans", sans-serif;
 }
+
+.rounded-card{
+    border-radius:3px;
+}
+
+.THIS .table-test thead th span {
+background-color: #16325c;
+color: white}
 </style>

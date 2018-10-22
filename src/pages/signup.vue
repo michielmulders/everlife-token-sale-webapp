@@ -5,6 +5,7 @@
       v-model="email"
       :rules="emailRules"
       label="E-mail"
+      @keyup.enter="submit"
       required
     ></v-text-field>
 
@@ -14,6 +15,7 @@
       :counter="70"
       label="Full Name"
       maxLength="70"
+      @keyup.enter="submit"
       required
     ></v-text-field>
 
@@ -22,6 +24,7 @@
       :rules="phoneRules"
       label="Phone"
       maxLength="18"
+      @keyup.enter="submit"
     ></v-text-field>
 
     <v-text-field
@@ -34,6 +37,7 @@
       hint="At least 8 characters"
       :rules="passwordRules"
       counter
+      @keyup.enter="submit"
       required
     ></v-text-field>
 
@@ -48,6 +52,7 @@
       name="passfield"
       :rules="[() => passwordConfirm == password || 'Password do not match']"
       counter
+      @keyup.enter="submit"
       required
     ></v-text-field>
 
@@ -60,12 +65,12 @@
       </v-checkbox>
 
       <v-layout justify-center>
--      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
--    </v-layout>
--    <p v-if="error" class="red--text">{{error}}</p>
+      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
+      </v-layout>
+      <p v-if="error" class="red--text">{{error}}</p>
     <v-layout justify-center>
       <v-btn
-        :disabled="!valid"
+        :disabled="!hasAcceptedTerms && !valid"
         @click="submit"
         color="blue darken-2 white--text" large>
         Signup
@@ -145,6 +150,9 @@ export default {
     captchaResponse(response){
       this.valid = true;
       this.reCaptcha = response;
+    },
+    hasAcceptedTerms() {
+      this.termsCheckbox= true;
     }
   },
 

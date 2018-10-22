@@ -1,7 +1,7 @@
 <template>
   <v-layout align-center column>
     <h2>KYC Details</h2>
-    <div id="idm-container" style="width: 500px"></div>
+    <div id="idm-container" style="width: 700px"></div>
   </v-layout>
 </template>
 
