@@ -38,9 +38,9 @@ export default {
 </script>
 <style scoped>
   .smallScreen {
-    padding-top: 150px;
+    padding-top: 100px;
   }
   .mediumScreen {
-    padding-top: 150px;
+    padding-top: 100px;
   }
 </style>

@@ -1,10 +1,13 @@
 <template>
 <div>
     <div class="header">
-        <v-container class="my-3">
+        <v-container class="my-0">
             <v-layout row align-content-space-between>
                 <v-flex>
-                <div v-if="isAdmin">
+                <div v-if="!isSignIn">
+                  <router-link  :to="{ name: 'login'}"<img alt="logo" src="/static/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></router-link>
+                  </div>
+                <div v-else-if="isAdmin">
                   <router-link  :to="{ name: 'dashboard'}"><img alt="logo" src="/static/logo-full-white.png" srcset="/static/logo-full-white2x.png 2x"></router-link>
                   </div>
                   <div v-else>
@@ -28,6 +31,14 @@
                 </v-flex>
             </v-layout>
         </v-container>
+    </div>
+    <v-alert class="alert text-md-center caption" v-show="alert.show" :color="alert.color">
+        <span>{{alert.text}}</span>
+        <span v-show="alert.rshow"><router-link  :to="{ name: 'kyc'}"  class="text-color:white">Proceed to Submit your KYC details</router-link></span>
+        <br/>
+      </v-alert>
+    <div>
+
     </div>
     <v-navigation-drawer
         v-model="drawer"
@@ -71,6 +82,8 @@
             clickMode="push"
         ></vue-particles>
     </div>
+
+
 </div>
 </template>
 
@@ -85,6 +98,27 @@ export default {
       isAdmin: function () {
         return !this.$store.getters.isVerifier;
       },
+
+      isSignIn: function(){
+        return this.$store.getters.isLoggedIn;
+      },
+
+      alert: function () {
+        if(this.$store.getters.isLoggedIn && !this.$store.getters.isVerifier){
+          if (this.$store.getters.kycStatus=="ACCEPT") {
+            return {show:false, enablePurchaseBtn:true};
+          }else if(this.$store.getters.kycStatus=="REJECT"){
+            return {show:true,  rshow:true, enablePurchaseBtn:false, color:"error", text:"We regret to inform you that your KYC application was rejected."};
+          }else if(this.$store.getters.kycStatus=="PENDING"){
+            return {show:true, rshow:false, enablePurchaseBtn:false, color:"warning", text:"Waiting for KYC approval, a notification e-mail will be sent once verification is complete."};
+          }else{
+              return {show:true, rshow:true, enablePurchaseBtn:false, color:"error", text:"Your KYC is Pending."};
+          }
+        }else{
+        return {show:false, rshow:false};
+        }
+      },
+
       items() {
           if(this.$store.getters.isLoggedIn){
             const idmStatus = this.$store.getters.idmStatus;
@@ -145,7 +179,7 @@ export default {
     position:absolute;
     left:0;
     top:0;
-    height:120px;
+    height:80px;
     width:100%;
     content:'';
     overflow:hidden;
@@ -200,5 +234,14 @@ export default {
     width:440px;
     left:calc(50% + 685px);
     top:calc(50% + 240px)
+}
+
+.alert {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height:10px
 }
 </style>
