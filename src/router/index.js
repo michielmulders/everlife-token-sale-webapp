@@ -19,6 +19,7 @@ Vue.use(Router)
  */
 
 const router = new Router({
+  hashbang: false,
   mode: 'history',
   routes: [
     {
@@ -46,19 +47,19 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
-      meta: { title: "Dashboard" }
+      meta: { title: "Dashboard", requiresAuth: true }
     },
     {
       path: '/payment',
       name: 'payment',
       component: Payment,
-      meta: { title: "Payment" }
+      meta: { requiresAuth: true }
     },
     {
       path: '/kyc',
       name: 'kyc',
-      component: Kyc
-      // meta: { requiresAuth: true }
+      component: Kyc,
+      meta: { requiresAuth: true }
     },
     {
       path: '/reviewkyc',
@@ -81,9 +82,18 @@ const router = new Router({
 //   }
 // });
 
+//router.beforeEach((to, from, next) => {
+  //document.title = "Everlife.AI Token Sale - " + to.meta.title
+  //next()
+//});
+
 router.beforeEach((to, from, next) => {
-  document.title = "Everlife.AI Token Sale - " + to.meta.title
-  next()
+   const isLoggedIn = store.getters.isLoggedIn;
+  if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
+    next({ path: '/login', query: { redirect: to.fullPath }});
+  } else {
+    next();
+  }
 });
 
 export default router
