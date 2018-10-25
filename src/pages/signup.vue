@@ -56,26 +56,26 @@
       required
     ></v-text-field>
 
-    <v-checkbox v-model="accepted" light>
+    <v-checkbox  light
       v-model="termsCheckbox"
-      :rules="[v => !!v || 'You must agree to continue!']"
+      :rules="[v => !!v || 'You must agree to continue!']">
         <template slot="label">
          <a @click.stop href="https://everlife.ai/terms.htm" target="_blank"> Accept Terms</a>
         </template> required
       </v-checkbox>
 
       <v-layout justify-center>
-      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class="mt-5"></vue-recaptcha>
+      <vue-recaptcha :sitekey="reCaptchaSiteKey" v-on:verify="captchaResponse" class=""></vue-recaptcha>
       </v-layout>
-      <p v-if="error" class="red--text">{{error}}</p>
-    <v-layout justify-center>
-      <v-btn
-        :disabled="!hasAcceptedTerms && !valid"
-        @click="submit"
-        color="blue darken-2 white--text" large>
-        Signup
-      </v-btn>
-    </v-layout>
+      <p justify-center v-if="error" class="red--text">{{error}}</p>
+      <v-layout justify-center>
+        <v-btn
+          :disabled="!hasAcceptedTerms && !valid"
+          @click="submit"
+          color="blue darken-2 white--text" large>
+          Signup
+        </v-btn>
+      </v-layout>
 
   </v-form>
 </v-layout>
