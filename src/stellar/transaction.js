@@ -5,7 +5,7 @@ import store from '../store'
  * Setup server for pubic network or testnet
  */
 let server;
-if (process.env.STELLAR_TESTNET === "true") {
+if (process.env.STELLAR_ENV === "development") {
     server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
     StellarSdk.Network.useTestNetwork();
 } else {

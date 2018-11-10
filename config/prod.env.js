@@ -7,8 +7,7 @@ const schema = joi.object({
   STELLAR_ENV:      joi.string().required(),
   IDM_PLUGIN_JS:    joi.string().required(),
   IDM_PLUGIN_TOKEN: joi.string().required(),
-  MAILGUN_SENDER_FROM: joi.string().required(),
-  STELLAR_TESTNET: joi.string().required()
+  MAILGUN_SENDER_FROM: joi.string().required()
 })
   .unknown()
   .required();
@@ -24,6 +23,5 @@ module.exports = {
   STELLAR_ENV:      JSON.stringify(envVars.STELLAR_ENV),
   IDM_PLUGIN_JS:    JSON.stringify(envVars.IDM_PLUGIN_JS),
   IDM_PLUGIN_TOKEN: JSON.stringify(envVars.IDM_PLUGIN_TOKEN),
-  MAILGUN_SENDER_FROM: JSON.stringify(envVars.MAILGUN_SENDER_FROM),
-  STELLAR_TESTNET: JSON.stringify(envVars.STELLAR_TESTNET)
+  MAILGUN_SENDER_FROM: JSON.stringify(envVars.MAILGUN_SENDER_FROM)
 };
